@@ -1,0 +1,55 @@
+--------------------------------- TCP Server test -----------------------------------------
+1# server_t1.cpp
+	Test that the client connect success, and accept_success_func() in server return -1,
+	the server disconnect.
+	
+2# server_t2.cpp
+	Test that the client connect success, and the client disconnect.
+	
+3# server_t3.cpp
+	Test that the client connect success, the server disconnect after 15 seconds.
+	
+4# server_t4.cpp
+	Test that the client connect success, and then send message to server. the server find that the
+	message's header is wrong, and to disconnect.
+	
+5# server_t5.cpp
+	Test that the client connect success, and then send message to server. the server receive full message, 
+	to find that message is wrong, and to disconnect.
+	
+6# server_t6.cpp
+	Test that the four client connect success. the server will send message to every client 10 times, 
+	and then the server disconnect.
+	
+7# server_t7.cpp
+	Test that the five client connect to server. the server allow to connect max of three client, 
+	more connect will been diconnected.
+	
+8# server_t8.cpp
+	Test that the four client connect success. the server will send message to every client in 100 times 
+	interval 20ms.
+	
+9# server_t9.cpp
+	Test that the client connect to server. the server will authenticate client, invalid to disconnect.
+	
+10# server_t10.cpp
+	Test that the client connect to server. the server will check heart-jump interval 3 seconds, if the 
+	heart-jump is timeout, server will close socket.
+	
+	--------------------------------- TCP Client test -----------------------------------------
+1# client_t1.cpp
+	It is fail that the client connect to server, the client connect again.
+	
+2# client_t2.cpp
+	It is success that the client connect to server, and the server disconnect, the client connect again.
+	
+3# client_t3.cpp
+	It is success that the client connect to server, the message is correct both from server and to server.
+	
+4# client_t4.cpp
+	It is success that the client connect to server, the client auto to send heart-jump.
+	
+5# client_t5.cpp
+	It is success that the client connect to server, the client send authentication message to server first,
+	and then wait for message from the server.   
+	

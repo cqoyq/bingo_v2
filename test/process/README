@@ -1,0 +1,9 @@
+--------------------------------- shm_test -----------------------------------------
+1# shm_t.cpp
+	1. Test that one process send data and other one process receive data, transfered data is correct.
+	
+	2. Test that two process handle to send and receive on normal, when sendor is downed, and restart
+	   sendor, send and receive is normal.
+	   
+	3. Test that two process handle to send and receive on normal, when receiver is downed, and restart
+	   receiver, send and receive is normal. 

@@ -1,0 +1,29 @@
+--------------------------------- many_to_one test -----------------------------------------
+1# many_to_one_t1.cpp
+	Test that the task create success.
+	
+2# many_to_one_t2.cpp
+	Test that svc() thread has exit, To push data into queue is error.
+	
+3# many_to_one_t3.cpp
+	Test that to push data into queue in multi-thread, the data which pop from queue in single thread
+	is correct. 
+	
+
+	
+--------------------------------- many_to_many test -----------------------------------------
+1# many_to_many_t1.cpp
+	Test that the task create success.  
+	
+2# many_to_many_t2.cpp
+	Test that to create multi svc thread, every svc thread is be exit alone.  
+	
+3# many_to_many_t3.cpp
+	Test that to create multi svc thread, it's fail to push data to queue 
+	after every svc thread is be exit alone.  
+	
+4# many_to_many_t4.cpp
+	Test that to push data into queue in multi-thread, the data which pop from queue in multi-thread
+	is correct.  
+	 
+	
