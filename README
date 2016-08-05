@@ -1,0 +1,4 @@
+Project libbingo version history:
+# v1.0.1_r1
+  1. add new .h file in bingo/tcp/all.h.
+  2. add README file.
