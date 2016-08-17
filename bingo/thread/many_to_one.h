@@ -26,9 +26,18 @@ template<typename TASK_MESSAGE_DATA,
 class many_to_one{
 public:
 	typedef function<void(TASK_MESSAGE_DATA*& data)> 		thr_top_callback;
+	typedef function<void()> 								thr_init_callback;
 
 	many_to_one(thr_top_callback& f):
 		f_(f),
+		f1_(0),
+		exit_data_(0),
+		is_thread_exit_(false),
+		thr_(bind(&many_to_one::svc, this)){}
+
+	many_to_one(thr_top_callback& f, thr_init_callback& f1):
+		f_(f),
+		f1_(f1),
 		exit_data_(0),
 		is_thread_exit_(false),
 		thr_(bind(&many_to_one::svc, this)){}
@@ -94,6 +103,8 @@ private:
 		message_out_with_thread("call svc()!")
 #endif
 
+		if(f1_) f1_();
+
 		while(true){
 
 			TASK_MESSAGE_DATA* data_p = 0;
@@ -158,6 +169,7 @@ private:
 
 private:
 	thr_top_callback f_;
+	thr_init_callback f1_;
 
 	// The thread call svc().
 	boost::thread thr_;

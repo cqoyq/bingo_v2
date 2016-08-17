@@ -26,9 +26,23 @@ template<typename TASK_MESSAGE_DATA,
 class many_to_many{
 public:
 	typedef function<void(TASK_MESSAGE_DATA*& data)> 		thr_top_callback;
+	typedef function<void()> 								thr_init_callback;
 
 	many_to_many(thr_top_callback& f, int thread_n):
 		f_(f),
+		f1_(0),
+		exit_data_(0),
+		thread_active_num_(thread_n),
+		is_thread_exit_(false){
+
+		// Make thread_n new thread to read queue.
+		for(int i = 0;i < thread_n; i++)
+			thr_group_.create_thread(bind(&many_to_many::svc, this));
+	}
+
+	many_to_many(thr_top_callback& f, thr_init_callback& f1, int thread_n):
+		f_(f),
+		f1_(f1),
 		exit_data_(0),
 		thread_active_num_(thread_n),
 		is_thread_exit_(false){
@@ -110,6 +124,8 @@ private:
 		message_out_with_thread("call svc()!")
 #endif
 
+		if(f1_) f1_();
+
 		while(true){
 
 			TASK_MESSAGE_DATA* data_p = 0;
@@ -173,6 +189,7 @@ private:
 
 private:
 	thr_top_callback f_;
+	thr_init_callback f1_;
 
 	// The thread call svc().
 	thread_group thr_group_;

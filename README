@@ -2,3 +2,8 @@ Project libbingo version history:
 # v1.0.1_r1
   1. add new .h file in bingo/tcp/all.h.
   2. add README file.
+  
+# v1.0.1_r2
+  1. modify Makefile.
+  2. add callback function thr_init_callback in bingo/thread/many_to_one.h 
+  	  and bingo/thread/many_to_many.h.

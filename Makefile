@@ -1,6 +1,5 @@
-INCLUDE = -I/opt/software/mysql-connector-c-commercial-6.1.3-linux-glibc2.5-x86_64/include \
-		  -I/opt/software/openssl-1.0.1e/include \
-          -I/opt/software/boost_1_59_0
+INCLUDE = -I$(BOOST_INCLUDE_ROOT) \
+          -I$(MYSQL_INCLUDE_ROOT)
 
 LIBS = -lpthread \
 	   -lmysqlclient_r \
@@ -16,8 +15,8 @@ LIBS = -lpthread \
 	   -lboost_coroutine \
        -lboost_unit_test_framework
 	  
-LIBPATH = -L/opt/software/boost_1_59_0/stage/lib \
-		  -L/opt/mysql-connector-c-commercial-6.1.3-linux-glibc2.5-x86_64/lib
+LIBPATH = -L$(BOOST_LIB_ROOT) \
+		   -L$(MYSQL_LIB_ROOT)
 
 OBJS =  main.o \
 		bingo/config/json/parse_handler.o \
