@@ -29,8 +29,7 @@ namespace bingo { namespace log {
 template<typename PARSER>
 class file_logger_every_day : public logger {
 public:
-	file_logger_every_day(){
-		cur_level_ = LOG_LEVEL_OFF;
+	file_logger_every_day(): logger(){
 	}
 	virtual ~file_logger_every_day(){};
 

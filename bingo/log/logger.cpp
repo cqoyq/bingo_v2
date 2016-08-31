@@ -29,7 +29,7 @@ using namespace bingo::log;
 }
 
 logger::logger(){
-	cur_level_ = LOG_LEVEL_OFF;
+	cur_level_ = LOG_LEVEL_ALL;
 }
 
 logger::~logger(){

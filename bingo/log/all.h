@@ -13,5 +13,6 @@
 
 #include "file_logger_every_day.h"
 #include "file_logger_every_hour.h"
+#include "file_logger_without_postfix.h"
 
 #endif /* BINGO_LOG_ALL_HEADER_H_ */

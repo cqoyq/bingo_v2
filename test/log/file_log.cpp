@@ -57,6 +57,16 @@ BOOST_AUTO_TEST_CASE(t){
 	my_log::release();
 }
 
+typedef bingo::singleton_v0<
+				    log::file_logger_without_postfix<my_parse>
+		> my_log_without_postfix;
+
+BOOST_AUTO_TEST_CASE(t_without_postfix){
+	my_log_without_postfix::construct();
+	my_log_without_postfix::instance()->log_d("info", log::log_data() << "this is a test!");
+	my_log_without_postfix::release();
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
