@@ -19,6 +19,10 @@ public:
 	virtual ~file_logger_without_postfix(){};
 
 	void get_filename_postfix(string& filename){
+		size_t size = filename.size();
+		string newstr = filename.substr(0, size - 1);
+		filename.clear();
+		filename.append(newstr.c_str());
 	}
 };
 

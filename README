@@ -14,3 +14,7 @@ Project libbingo version history:
 # v1.0.1_n1
 	1. add log handler without postfix, file in bingo/log/file_logger_without_postfix.h.
 	2. change log's level to LOG_LEVEL_ALL by default.
+	
+# v1.0.1_r4
+	1. remove postfix '.' in file_logger_without_postfix.h.
+
