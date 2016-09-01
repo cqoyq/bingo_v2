@@ -25,8 +25,8 @@ template<typename TASK_MESSAGE_DATA,
 		 typename TASK_EXIT_DATA>
 class many_to_one{
 public:
-	typedef function<void(TASK_MESSAGE_DATA*& data)> 		thr_top_callback;
-	typedef function<void()> 								thr_init_callback;
+	typedef boost::function<void(TASK_MESSAGE_DATA*& data)> 		thr_top_callback;
+	typedef boost::function<void()> 								thr_init_callback;
 
 	many_to_one(thr_top_callback& f):
 		f_(f),

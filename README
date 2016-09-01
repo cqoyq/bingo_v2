@@ -17,4 +17,7 @@ Project libbingo version history:
 	
 # v1.0.1_r4
 	1. remove postfix '.' in file_logger_without_postfix.h.
-
+	
+# v1.0.1_r5
+	1. explicit boost::function type 's namespace.
+	2. support c++11 in Makefile.

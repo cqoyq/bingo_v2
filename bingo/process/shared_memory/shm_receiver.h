@@ -39,8 +39,8 @@ template<typename PARSER,
 		 >
 class shm_receiver {
 public:
-	typedef function<void(char*& data)> 								rev_succ_callback;
-	typedef function<void(int& err_code, interprocess_exception& ex)> 	rev_error_callback;
+	typedef boost::function<void(char*& data)> 								rev_succ_callback;
+	typedef boost::function<void(int& err_code, interprocess_exception& ex)> 	rev_error_callback;
 
 	shm_receiver(rev_succ_callback& f1, rev_error_callback& f2):
 		f1_(f1),
