@@ -134,11 +134,11 @@ private:
 
 		pt::ptree& addnode = tree.add(n->name, n->value);
 
-		if(n->child.set.size() > 0){
+		if(n->child.size() > 0){
 			// Have child, then node value is ''.
 			addnode.put_value("");
 
-			foreach_(node& m, n->child.set){
+			foreach_(node& m, n->child.collection()){
 				make_ptree(&m, addnode);
 			}
 		}

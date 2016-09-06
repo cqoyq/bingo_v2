@@ -132,11 +132,11 @@ BOOST_AUTO_TEST_CASE(t){
 	//	read node error:No such node (application.gateway.qa)
 
 	node* n = xml.get_node("application.gateway.ips", err);
-	BOOST_CHECK(n->child.set[0].attrs.set[0].name.compare("value") == 0);
-	BOOST_CHECK(n->child.set[0].attrs.set[0].value.compare("110.1.0.0/16") == 0);
+	BOOST_CHECK(n->child[0]->attrs[0]->name.compare("value") == 0);
+	BOOST_CHECK(n->child[0]->attrs[0]->value.compare("110.1.0.0/16") == 0);
 
-	BOOST_CHECK(n->child.set[1].attrs.set[0].name.compare("value") == 0);
-	BOOST_CHECK(n->child.set[1].attrs.set[0].value.compare("110.2.0.0/16") == 0);
+	BOOST_CHECK(n->child[1]->attrs[0]->name.compare("value") == 0);
+	BOOST_CHECK(n->child[1]->attrs[0]->value.compare("110.2.0.0/16") == 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

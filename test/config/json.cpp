@@ -125,9 +125,9 @@ BOOST_AUTO_TEST_CASE(t){
 	//	read node error:No such node (application.gateway.qa)
 
 	node* n = json.get_node("application.items", err);
-	BOOST_CHECK(n->child.set[0].value.compare("one") == 0);
-	BOOST_CHECK(n->child.set[1].value.compare("two") == 0);
-	BOOST_CHECK(n->child.set[2].value.compare("three") == 0);
+	BOOST_CHECK(n->child[0]->value.compare("one") == 0);
+	BOOST_CHECK(n->child[1]->value.compare("two") == 0);
+	BOOST_CHECK(n->child[2]->value.compare("three") == 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

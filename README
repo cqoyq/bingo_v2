@@ -21,3 +21,6 @@ Project libbingo version history:
 # v1.0.1_r5
 	1. explicit boost::function type 's namespace.
 	2. support c++11 in Makefile.
+	
+# v1.0.1_r6
+	1. modify node.h class.

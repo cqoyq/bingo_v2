@@ -175,10 +175,10 @@ private:
 		pt::ptree& addnode = tree.add(n->name, n->value);
 
 
-		if(n->attrs.set.size() > 0){
+		if(n->attrs.size() > 0){
 
 			pt::ptree& addattr = addnode.add("<xmlattr>","");
-			foreach_(node_attr& k, n->attrs.set){
+			foreach_(node_attr& k, n->attrs.collection()){
 				// Create attribute node.
 				pt::ptree::value_type tvalue(pair<string, pt::ptree>(k.name,pt::ptree()));
 				tvalue.second.put_value(k.value);
@@ -186,11 +186,11 @@ private:
 			}
 		}
 
-		if(n->child.set.size() > 0){
+		if(n->child.size() > 0){
 			// Have child, then node value is ''.
 			addnode.put_value("");
 
-			foreach_(node& m, n->child.set){
+			foreach_(node& m, n->child.collection()){
 				make_ptree(&m, addnode);
 			}
 		}

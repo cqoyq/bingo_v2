@@ -35,25 +35,61 @@ struct node_attr{
 };
 
 // Node attribute set class
-struct node_attr_set{
+class node_attr_set{
+public:
 	node_attr_set& push_back(node_attr* n){
 		set.push_back(n);
 		return (*this);
 	}
 
+	node_attr* operator[](int index){
+		int max = set.size() - 1;
+		if(index <= max)
+			return &(set[index]);
+		else
+			return 0;
+	}
+
+	size_t size(){
+		return set.size();
+	}
+
+	boost::ptr_vector<node_attr>& collection(){
+		return set;
+	}
+
+private:
 	boost::ptr_vector<node_attr> set;
 };
 
 class node;
 
 // Node set class.
-struct node_set{
-
+class node_set{
+public:
+	// Return add node.
 	node* push_back(node* n){
 		set.push_back(n);
 		return n;
 	}
 
+	node* operator[](int index){
+		int max = set.size() - 1;
+		if(index <= max)
+			return &(set[index]);
+		else
+			return 0;
+	}
+
+	size_t size(){
+		return set.size();
+	}
+
+	boost::ptr_vector<node>& collection(){
+		return set;
+	}
+
+private:
 	boost::ptr_vector<node> set;
 };
 
