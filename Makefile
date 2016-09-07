@@ -88,6 +88,7 @@ clean:
 else ifeq ($(findstring Lib_,$(ConfigName)),Lib_)
 all:
 	$(CXX)  $(CXXFLAGS) -o $(TARGET) $(CPPS) $(LIBS) $(LIBPATH);
+	cp  $(TARGET) $(MY_LIB_ROOT)
 
 clean:
 	rm -f $(TARGET)

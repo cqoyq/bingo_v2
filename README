@@ -24,3 +24,6 @@ Project libbingo version history:
 	
 # v1.0.1_r6
 	1. modify node.h class.
+	
+# v1.0.1_r7
+	1. add operator[] method in node.h.

@@ -50,6 +50,18 @@ public:
 			return 0;
 	}
 
+	node_attr* operator[](const char* attr_name){
+		node_attr* p = 0;
+		int max = set.size();
+		for (int i = 0; i < max; i++) {
+			if(set[i].name.compare(attr_name) == 0){
+				p = &(set[i]);
+				break;
+			}
+		}
+		return p;
+	}
+
 	size_t size(){
 		return set.size();
 	}
