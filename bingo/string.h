@@ -33,10 +33,19 @@ public:
 private:
 	void clear();
 
+	// char -> int
+	// for example: 'd' -> 11
+	int char_to_int(string chr);
+
 public:
 	// byte's stream -> string.
 	// for example: {0x00, 0x01, 0x02} -> '00 01 02'
 	const char* stream_to_string(const char* p, size_t p_size);
+
+	// string -> byte's stream.
+	// for example: '01 02 03' -> {0x01, 0x02, 0x03}
+	// @out must be initialized and allocate memory.
+	void string_to_stream(string& in, char*& out);
 
 	// byte's stream -> string.
 	// for example: {0x66, 0x59, 0x48, 0x61} -> 'fYHa'

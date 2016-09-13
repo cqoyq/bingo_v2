@@ -27,3 +27,6 @@ Project libbingo version history:
 	
 # v1.0.1_r7
 	1. add operator[] method in node.h.
+	
+# v1.0.1_r8
+	1. add  string_ex::string_to_stream() method.

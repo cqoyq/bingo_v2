@@ -23,6 +23,7 @@ OBJS =  main.o \
 		bingo/config/xml/parse_handler.o \
 		bingo/log/logger.o \
 		bingo/string.o \
+		test/string_ex.o \
 		test/singleton.o \
 		test/mem_guard.o \
 		test/tcp/server_t1.o \

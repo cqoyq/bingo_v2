@@ -23,6 +23,47 @@ void string_ex::clear(){
 	memset(&chr_[0], 0x00, MAX_SIZE_OF_CHR);
 }
 
+
+int string_ex::char_to_int(string chr){
+
+	// Change to lower.
+	to_lower(chr);
+
+	if(chr.compare("1") == 0){
+		return 1;
+	}else if (chr.compare("2") == 0){
+		return 2;
+	}else if (chr.compare("3") == 0){
+		return 3;
+	}else if (chr.compare("4") == 0){
+		return 4;
+	}else if (chr.compare("5") == 0){
+		return 5;
+	}else if (chr.compare("6") == 0){
+		return 6;
+	}else if (chr.compare("7") == 0){
+		return 7;
+	}else if (chr.compare("8") == 0){
+		return 8;
+	}else if (chr.compare("9") == 0){
+		return 9;
+	}else if (chr.compare("a") == 0){
+		return 10;
+	}else if (chr.compare("b") == 0){
+		return 11;
+	}else if (chr.compare("c") == 0){
+		return 12;
+	}else if (chr.compare("d") == 0){
+		return 13;
+	}else if (chr.compare("e") == 0){
+		return 14;
+	}else if (chr.compare("f") == 0){
+		return 15;
+	}else{
+		return 0;
+	}
+}
+
 const char* string_ex::stream_to_string(const char* p, size_t p_size){
 
 	clear();
@@ -36,7 +77,28 @@ const char* string_ex::stream_to_string(const char* p, size_t p_size){
 		str_.append(&tmp[0]);
 	}
 
+	trim(str_);
+
 	return str_.c_str();
+}
+
+void string_ex::string_to_stream(string& in, char*& out){
+	vector<string> v;
+	split(v, in, is_any_of(" "),token_compress_on);
+
+	size_t max = v.size();
+	for (size_t i = 0; i < max; ++i) {
+		string vt = v[i];
+
+		string height_bit = vt.substr(0, 1);
+		string low_bit 	 = vt.substr(1, 1);
+		int hbit =char_to_int(height_bit);
+		int lbit  =char_to_int(low_bit);
+
+		int value = lbit + hbit * 16;
+
+		out[i] = value;
+	}
 }
 
 const char* string_ex::stream_to_char(const char* p, size_t p_size){
