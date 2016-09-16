@@ -30,3 +30,6 @@ Project libbingo version history:
 	
 # v1.0.1_r8
 	1. add  string_ex::string_to_stream() method.
+	
+# v1.0.1_r9
+	1. explicit boost::function type 's namespace.

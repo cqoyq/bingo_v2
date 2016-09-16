@@ -38,7 +38,7 @@ public:
 	typedef mem_guard<TCP_MESSAGE_PACKAGE> package;
 
 	tcp_cet_handler(boost::asio::io_service& io_service,
-			function<void()> f						// reconnect func
+			boost::function<void()> f						// reconnect func
 	)
 		: ios_(io_service),
 		  socket_(io_service),
@@ -481,7 +481,7 @@ protected:
 	size_t package_size_;
 
 
-	function<void()> 					f_;
+	boost::function<void()> 					f_;
 
 	deadline_timer timer_;				// Heartjump timer.
 
