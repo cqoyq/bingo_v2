@@ -9,6 +9,7 @@
 #define BINGO_PROCESS_SHARED_MEMORY_SHM_SENDER_HEADER_H_
 
 #include "../../define.h"
+#include "../../error_what.h"
 
 #include "error_code.h"
 #include "shm_data.h"
@@ -37,7 +38,7 @@ template<typename PARSER,
 		 >
 class shm_sender {
 public:
-	typedef function<void(int& err_code, interprocess_exception& ex)> 			snd_error_callback;
+	typedef boost::function<void(error_what&, interprocess_exception&)> 			snd_error_callback;
 
 	// Construct object on the side of sender.
 	shm_sender(snd_error_callback& f):
@@ -45,7 +46,7 @@ public:
 
 	virtual ~shm_sender(){}
 
-	int put(TASK_MESSAGE_DATA& msg, int& err_code){
+	int put(TASK_MESSAGE_DATA& msg, error_what& e_what){
 
 		// Avoid to occupy cpu-time.
 		this_thread::sleep(milliseconds(1));
@@ -82,7 +83,10 @@ public:
 
 					 if(data->message_in){
 						 if(!data->cond_full.timed_wait(lock, get_system_time() + milliseconds(500))){
-							 err_code = error_process_task_send_data_fail;
+
+							 e_what.err_no(error_process_task_send_data_fail);
+							 e_what.err_message(error_process_task_send_data_fail_message);
+
 							 counter++;
 							 continue;
 						 }
@@ -104,8 +108,10 @@ public:
 					 break;
 				}
 			}catch(interprocess_exception &ex){
-				err_code = error_process_task_send_data_fail;
-				if(f_) f_(err_code, ex);
+				e_what.err_no(error_process_task_send_data_fail);
+				e_what.err_message(error_process_task_send_data_fail_message);
+
+				if(f_) f_(e_what, ex);
 
 				counter++;
 			}

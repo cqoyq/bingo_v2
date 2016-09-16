@@ -54,17 +54,17 @@ BOOST_AUTO_TEST_CASE(t){
 
 	// Check current() and length()
 	{
-		u8_t err_code = 0;
+		error_what e_what;
 
 		char a[10] = {0x00};
 		memset(a, 0x01, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), 0);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), 0);
 
 		BOOST_CHECK_EQUAL(my->current(), my->header() + 10);
 		BOOST_CHECK_EQUAL(my->length(), 10);
 
 		memset(a, 0x02, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), 0);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), 0);
 
 		BOOST_CHECK_EQUAL(my->current(), my->header() + 20);
 		BOOST_CHECK_EQUAL(my->length(), 20);
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(t){
 		my->clear();
 
 		char b[35] = {0x00};
-		BOOST_CHECK_EQUAL(my->copy(b, 35, err_code), 0);
+		BOOST_CHECK_EQUAL(my->copy(b, 35, e_what), 0);
 		BOOST_CHECK(my->current() == 0);							// arrive end of data_
 		BOOST_CHECK_EQUAL(my->length(), 35);
 	}
@@ -82,11 +82,11 @@ BOOST_AUTO_TEST_CASE(t){
 		my->clear();
 
 		bingo::string_ex t;
-		u8_t err_code = 0;
+		error_what e_what;
 
 		char a[35] = {0x00};
 		memset(a, 0xFE, 34);
-		BOOST_CHECK_EQUAL(my->copy(a, 35, err_code), 0);
+		BOOST_CHECK_EQUAL(my->copy(a, 35, e_what), 0);
 		cout << "call copy():" << t.stream_to_string(my->header(), my->size()) << endl;
 		// output
 		// call copy() one:fe fe fe fe fe fe fe fe fe fe
@@ -95,8 +95,8 @@ BOOST_AUTO_TEST_CASE(t){
 		//                 fe fe fe fe 00
 
 		char b[50] = {0xFE};
-		BOOST_CHECK_EQUAL(my->copy(b, 50, err_code), -1);			// error
-		BOOST_CHECK_EQUAL(err_code, (u8_t)bingo::mem_guard<info>::error_copy_data_exceed_max_size);
+		BOOST_CHECK_EQUAL(my->copy(b, 50, e_what), -1);			// error
+		BOOST_CHECK_EQUAL(e_what.err_no(), (int)bingo::mem_guard<info>::error_copy_data_exceed_max_size);
 	}
 
 	// Check append()
@@ -104,21 +104,21 @@ BOOST_AUTO_TEST_CASE(t){
 		my->clear();												// clear() will clear all old data.
 
 		bingo::string_ex t;
-		u8_t err_code = 0;
+		error_what e_what;
 
 		char a[10] = {0x00};
 		memset(a, 0x01, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), 0);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), 0);
 
 		memset(a, 0x02, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), 0);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), 0);
 
 		memset(a, 0x03, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), 0);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), 0);
 
 		memset(a, 0x04, 10);
-		BOOST_CHECK_EQUAL(my->append(a, 10, err_code), -1);			// error
-		BOOST_CHECK_EQUAL(err_code, (u8_t)bingo::mem_guard<info>::error_append_data_exceed_max_size);
+		BOOST_CHECK_EQUAL(my->append(a, 10, e_what), -1);			// error
+		BOOST_CHECK_EQUAL(e_what.err_no(), (int)bingo::mem_guard<info>::error_append_data_exceed_max_size);
 
 		cout << "call append():" << t.stream_to_string(my->header(), my->size()) << endl;
 		// output:

@@ -33,3 +33,6 @@ Project libbingo version history:
 	
 # v1.0.1_r9
 	1. explicit boost::function type 's namespace.
+	
+# v1.0.1_r10
+	1. provide error_what class.

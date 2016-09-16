@@ -64,26 +64,27 @@ public:
 				char*& rev_data,
 				size_t& rev_data_size,
 				size_t& /*remain_size*/,
-				u8_t& err_code){
+				error_what& e_what){
 
 		string_ex t;
 		cout << "handler:" << p.get() << ",do read_pk_header_complete_func(), header data:" <<
 					t.stream_to_string(rev_data, rev_data_size) << endl;
-		err_code = error_tcp_package_header_is_wrong;
+		e_what.err_no(error_tcp_package_header_is_wrong);
+		e_what.err_message(error_tcp_package_header_is_wrong_message);
 		return -1;
 	}
 
 
-	void catch_error_func(my_handler::pointer p, u8_t& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(my_handler::pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 
 	void close_complete_func(my_handler::pointer p, int& ec_value){
-		u8_t err_code = 0;
-		if(my_mgr::instance()->erase(p.get(), err_code) == 0){
+		error_what e_what;
+		if(my_mgr::instance()->erase(p.get(), e_what) == 0){
 			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),success" << endl;
 		}else{
-			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),err_code:" << err_code << endl;
+			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),err_code:" << e_what.err_no() << endl;
 		}
 	}
 };
@@ -103,7 +104,7 @@ public:
 
 	}
 
-	int accept_success_func(my_server::pointer ptr, u8_t& err_code){
+	int accept_success_func(my_server::pointer ptr, error_what& e_what){
 
 		my_mgr::instance()->push(ptr.get());
 		cout << "hdr:" << ptr.get() << ",do accept_success_insert_handler_mgr()" << endl;

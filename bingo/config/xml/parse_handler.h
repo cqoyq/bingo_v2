@@ -9,6 +9,7 @@
 #define BINGO_CONFIG_XML_PARSE_HANDLER_HEADER_H_
 
 #include "../../foreach_.h"
+#include "../../error_what.h"
 #include "../node.h"
 using bingo::config::node;
 
@@ -20,6 +21,13 @@ namespace pt = boost::property_tree;
 using namespace boost;
 
 namespace bingo { namespace config { namespace xml {
+
+enum {
+	error_xml_read_fail		 		= 0x01,
+	error_xml_get_value_fail			=0x02,
+	error_xml_get_attribute_fail	= 0x03,
+	error_xml_get_node_fail			= 0x04,
+};
 
 struct xml_parser{
 	static bool is_pretty;			// Whether format is pretty, true by default.
@@ -35,42 +43,48 @@ public:
 		if(node_ != 0) delete node_;
 	}
 
-	int read(const char* file, string& err){
+	int read(const char* file, error_what& e_what){
 		try{
 			pt::read_xml(file, pt_, pt::xml_parser::no_comments);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_xml_read_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return -1;
 		}
 	}
 
-	int read(stringstream& stream, string& err){
+	int read(stringstream& stream, error_what& e_what){
 		try{
 			pt::read_xml(stream, pt_, pt::xml_parser::no_comments);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_xml_read_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return -1;
 		}
 	}
 
 
-	int get_value(const char* path, string& value, string& err){
+	int get_value(const char* path, string& value, error_what& e_what){
 
 		try{
 			value = pt_.get<string>(path);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_xml_get_value_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return -1;
 		}
 	}
 
-	int get_attr(const char* path, const char* attrname, string& value, string& err){
+	int get_attr(const char* path, const char* attrname, string& value, error_what& e_what){
 		try
 		{
 			bool is_find = false;
@@ -93,14 +107,14 @@ public:
 			}
 			return 0;
 		}
-		catch(boost::exception& e)
-		{
-			err = current_exception_cast<std::exception>()->what();
+		catch(boost::exception& e){
+			e_what.err_no(error_xml_get_attribute_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
 			return -1;
 		}
 	}
 
-	node* get_node(const char* path, string& err){
+	node* get_node(const char* path, error_what& e_what){
 		if(node_ !=0) {
 			delete node_;
 			node_ = 0;
@@ -115,7 +129,9 @@ public:
 			return node_;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_xml_get_node_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return 0;
 		}
 	}

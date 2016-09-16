@@ -37,8 +37,8 @@ typedef bingo::singleton_v1<
 		my_sender_type::snd_error_callback
 		> my_sender;
 
-void snd_error(int& err_code, interprocess_exception& ex){
-	cout << "snd_error(), err_code:" << err_code << ",exception:" << ex.what() << endl;
+void snd_error(error_what& e_what, interprocess_exception& ex){
+	cout << "snd_error(), err_code:" << e_what.err_no() << ",exception:" << ex.what() << endl;
 	message_out_with_time("snd_error");
 }
 
@@ -54,10 +54,10 @@ void send_data(){
 		memcpy(&data[0], &i, 4);
 
 		my_message_type msg;
-		int err_code = 0;
-		msg.data.copy(&data[0], 12, err_code);
+		bingo::error_what e_what;
+		msg.data.copy(&data[0], 12, e_what);
 
-		int result = my_sender::instance()->put(msg, err_code);
+		int result = my_sender::instance()->put(msg, e_what);
 
 
 		send_total_num++;
@@ -105,8 +105,8 @@ void rev(char*& data){
 	receive_total_num++;
 }
 
-void rev_error(int& err_code, interprocess_exception& ex){
-	cout << "rev_error(), err_code:" << err_code << ",exception:" << ex.what() << endl;
+void rev_error(error_what& e_what, interprocess_exception& ex){
+	cout << "rev_error(), err_code:" << e_what.err_no() << ",exception:" << ex.what() << endl;
 }
 
 BOOST_AUTO_TEST_CASE(t_receiver){

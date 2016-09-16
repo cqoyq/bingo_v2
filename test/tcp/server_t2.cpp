@@ -54,8 +54,8 @@ public:
 
 	}
 
-	void catch_error_func(my_handler::pointer p, u8_t& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(my_handler::pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 
 	void close_complete_func(my_handler::pointer p, int& ec_value){
@@ -76,7 +76,7 @@ typedef bingo::singleton_v0<tcp_svr_hdr_manager<my_handler> > my_mgr;
 //
 //	}
 //
-//	int accept_success_func(my_server::pointer /*ptr*/, u8_t& /*err_code*/){
+//	int accept_success_func(my_server::pointer /*ptr*/, error_what& /*e_what*/){
 //		return 0;
 //	}
 //};

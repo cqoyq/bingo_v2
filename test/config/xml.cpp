@@ -100,13 +100,13 @@ BOOST_AUTO_TEST_CASE(t){
 	g_node.write<xml_parse_handler<> >("./confw.xml");		// write to file
 
 	// 测试读
-	string err;
+	bingo::error_what err;
 	xml_parse_handler<> xml;
 	BOOST_CHECK_EQUAL(xml.read("./confw.xml", err), 0);
 
 	string value;
 	BOOST_CHECK(xml.get_value("application.ab", value, err) == -1);							// read error
-	cout << "read value error:" << err << endl;
+	cout << "read value error:" << err.err_message() << endl;
 	// output:
 	//	read value error:No such node (application.ab)
 
@@ -114,12 +114,12 @@ BOOST_AUTO_TEST_CASE(t){
 	BOOST_CHECK_EQUAL(value.c_str(), "this is a test");
 
 	BOOST_CHECK(xml.get_attr("application.gateways", "t", value, err) == -1);				// read error
-	cout << "read attr of node error:" << err << endl;
+	cout << "read attr of node error:" << err.err_message() << endl;
 	// output:
 	//	read attr of node error:No such node (application.gateways)
 
 	BOOST_CHECK(xml.get_attr("application.gateway", "t", value, err) == -1);				// read error
-	cout << "read attr error:" << err << endl;
+	cout << "read attr error:" << err.err_message() << endl;
 	// output:
 	//  read attr error:attribute isn't exit!
 
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE(t){
 	BOOST_CHECK_EQUAL(value.c_str(), "1");
 
 	BOOST_CHECK(xml.get_node("application.gateway.qa", err) == 0);					// read error
-	cout << "read node error:" << err << endl;
+	cout << "read node error:" << err.err_message() << endl;
 	// output:
 	//	read node error:No such node (application.gateway.qa)
 

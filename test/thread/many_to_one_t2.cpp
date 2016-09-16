@@ -54,7 +54,7 @@ void run_input(){
 		this_thread::sleep(seconds(2));
 
 		my_data_message* msg = new my_data_message();
-		int err_code = 0;
+		error_what e_what;
 
 
 		if(i == 1)
@@ -62,10 +62,10 @@ void run_input(){
 
 		msg->data.object()->message[0] = (u8_t)i;
 
-		if(my_task::instance()->put(msg, err_code) == -1){			// Input T into queue
+		if(my_task::instance()->put(msg, e_what) == -1){			// Input T into queue
 
 			string_ex t;
-			message_out_with_thread("put error, err_code:" << err_code << ",data:" << t.stream_to_string(&msg->data.object()->message[0], 4))
+			message_out_with_thread("put error, err_code:" << e_what.err_no() << ",data:" << t.stream_to_string(&msg->data.object()->message[0], 4))
 
 			delete msg;
 

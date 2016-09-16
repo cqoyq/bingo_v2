@@ -11,6 +11,7 @@
 #include "../type.h"
 #include "../define.h"
 #include "../mem_guard.h"
+#include "../error_what.h"
 #include "tcp_error_code.h"
 
 #include <iostream>
@@ -83,8 +84,8 @@ public:
 		socket_.close();
 	}
 
-	void catch_error(u8_t err_code){
-		catch_error_func(this->shared_from_this(), err_code);
+	void catch_error(error_what& e_what){
+		catch_error_func(this->shared_from_this(), e_what);
 	}
 
 
@@ -160,27 +161,27 @@ public:
 
 	void send_data_in_thread(char*& sdata, size_t& sdata_size){
 
-		u8_t err_code = 0;
+		error_what e_what;
 		package* new_data = 0;
 
 		// Malloc send buffer.
-		if(malloc_snd_buffer(sdata, sdata_size, new_data, err_code) == 0){
+		if(malloc_snd_buffer(sdata, sdata_size, new_data, e_what) == 0){
 
 			ios_.post(bind(&tcp_svr_handler::active_send, this->shared_from_this(), new_data));
 		}else{
 
-			catch_error(err_code);
+			catch_error(e_what);
 
-			send_close_in_thread(err_code);
+			send_close_in_thread();
 
 		}
 
 
 	}
 
-	void send_close_in_thread(u8_t err_code){
+	void send_close_in_thread(){
 
-		ios_.post(bind(&tcp_svr_handler::active_close, this->shared_from_this(), err_code));
+		ios_.post(bind(&tcp_svr_handler::active_close, this->shared_from_this()));
 	}
 
 	void active_send(package*& pk){
@@ -188,10 +189,10 @@ public:
 		if(is_valid_){
 
 
-			u8_t err_code = 0;
-			if(active_send_in_ioservice_func(this->shared_from_this(), pk, err_code) == -1){
+			error_what e_what;
+			if(active_send_in_ioservice_func(this->shared_from_this(), pk, e_what) == -1){
 
-				catch_error(err_code);
+				catch_error(e_what);
 
 				free_snd_buffer(pk);
 
@@ -232,10 +233,12 @@ private:
 		}
 
 		// Set mblk's reader data length, and move rd_ptr().
-		u8_t err_code = 0;
-		if( rev_mgr_.change_length(bytes_transferred, err_code) == -1){
+		error_what e_what;
+		if( rev_mgr_.change_length(bytes_transferred, e_what) == -1){
 
-			catch_error(error_tcp_package_rev_exceed_max_size);
+			e_what.err_no(error_tcp_package_rev_exceed_max_size);
+			e_what.err_message(error_tcp_package_rev_exceed_max_size_message);
+			catch_error(e_what);
 
 			close_socket();
 			close_completed(ec.value());
@@ -260,17 +263,17 @@ private:
 
 			size_t remain = 0;
 
-			u8_t err_code = 0;
+
 			char* p = rev_mgr_.header();
 			if(read_pk_header_complete_func(
 					this->shared_from_this(),
 					p,
 					rev_mgr_.length(),
 					remain,
-					err_code) == -1){
+					e_what) == -1){
 
 				// Throw error, and err_code is error_tcp_package_header_is_wrong.
-				catch_error(err_code);
+				catch_error(e_what);
 
 				close_socket();
 				close_completed(ec.value());
@@ -282,7 +285,9 @@ private:
 			// Check whether remain size is valid.
 			if(!rev_mgr_.check_block_remain_space(remain)){
 
-				catch_error(error_tcp_package_rev_exceed_max_size);
+				e_what.err_no(error_tcp_package_rev_exceed_max_size);
+				e_what.err_message(error_tcp_package_rev_exceed_max_size_message);
+				catch_error(e_what);
 
 				close_socket();
 				close_completed(ec.value());
@@ -303,17 +308,15 @@ private:
 		}else{
 			// finish to recevie Message block.
 
-
-			u8_t err_code = 0;
 			char* p = rev_mgr_.header();
 			if(read_pk_full_complete_func(
 					this->shared_from_this(),
 					p,
 					rev_mgr_.length(),
-					err_code) == -1){
+					e_what) == -1){
 
 				//  Throw error, and err_code is error_tcp_package_body_is_wrong.
-				catch_error(err_code);
+				catch_error(e_what);
 
 				close_socket();
 				close_completed(ec.value());
@@ -348,11 +351,15 @@ private:
 
 
 
-	void active_close(u8_t& err_code){
+	void active_close(){
 
 		if(is_valid_){
 			//  Throw error, and err_code is error_tcp_server_close_socket_because_server.
-			catch_error(err_code);
+			error_what e_what;
+			e_what.err_no(error_tcp_server_close_socket_because_server);
+			e_what.err_message(error_tcp_server_close_socket_because_server_message);
+
+			catch_error(e_what);
 
 			close_socket();
 		}
@@ -365,8 +372,11 @@ private:
 		using namespace boost::system::errc;
 		if(ec.value() != operation_canceled){
 
-			u8_t err_code = error_tcp_server_close_socket_because_client;
-			catch_error(err_code);
+			error_what e_what;
+			e_what.err_no(error_tcp_server_close_socket_because_client);
+			e_what.err_message(error_tcp_server_close_socket_because_client_message);
+
+			catch_error(e_what);
 
 			// Passive close
 			close_socket();
@@ -390,15 +400,16 @@ private:
 			char*& ori_data,
 			size_t& ori_data_size,
 			package*& pk,
-			u8_t& err_code){
+			error_what& e_what){
 
 		if(ori_data_size > package_size_){
-			err_code = error_tcp_package_snd_exceed_max_size;
+			e_what.err_no(error_tcp_package_snd_exceed_max_size);
+			e_what.err_message(error_tcp_package_snd_exceed_max_size_message);
 			return -1;
 		}
 
 		pk = new package();
-		pk->copy(ori_data, ori_data_size, err_code);
+		pk->copy(ori_data, ori_data_size, e_what);
 
 		return 0;
 	}
@@ -421,7 +432,7 @@ private:
 	}
 
 public:
-	virtual void catch_error_func(pointer /*p*/, u8_t& /*err_code*/){
+	virtual void catch_error_func(pointer /*p*/, error_what& /*e_what*/){
 
 	}
 
@@ -434,7 +445,7 @@ public:
 			char*& /*rev_data*/,
 			size_t& /*rev_data_size*/,
 			size_t& /*remain_size*/,
-			u8_t& /*err_code*/){
+			error_what& /*e_what*/){
 
 		return 0;
 	}
@@ -443,7 +454,7 @@ public:
 			pointer /*p*/,
 			char*& /*rev_data*/,
 			size_t& /*rev_data_size*/,
-			u8_t& /*err_code*/){
+			error_what& /*e_what*/){
 		return 0;
 	}
 
@@ -458,7 +469,7 @@ public:
 	virtual int active_send_in_ioservice_func(
 			pointer /*p*/,
 			package*& /*pk*/,
-			u8_t& /*err_code*/){
+			error_what& /*e_what*/){
 
 		return 0;
 	}

@@ -14,6 +14,8 @@ enum {
 	error_thread_svc_has_exited 	= 0x01,
 };
 
+#define error_thread_svc_has_exited_message "the thread has exited!"
+
 } }
 
 

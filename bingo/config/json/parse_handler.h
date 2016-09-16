@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "../../foreach_.h"
+#include "../../error_what.h"
 #include "../node.h"
 using bingo::config::node;
 
@@ -22,6 +23,12 @@ using namespace boost;
 #include <boost/current_function.hpp>
 
 namespace bingo { namespace config { namespace json {
+
+enum {
+	error_json_read_fail		 		= 0x01,
+	error_json_get_value_fail			=0x02,
+	error_json_get_node_fail			= 0x03,
+};
 
 struct json_parser{
 	static bool is_pretty;
@@ -38,42 +45,47 @@ public:
 		if(node_ != 0) delete node_;
 	}
 
-	int read(const char* file, string& err){
+	int read(const char* file, error_what& e_what){
 		try{
 			pt::read_json(file, pt_);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_json_read_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return -1;
 		}
 	}
 
-	int read(stringstream& stream, string& err){
+	int read(stringstream& stream, error_what& e_what){
 		try{
 			pt::read_json(stream, pt_);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_json_read_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
 			return -1;
 		}
 	}
 
 
-	int get_value(const char* path, string& value, string& err){
+	int get_value(const char* path, string& value, error_what& e_what){
 
 		try{
 			value = pt_.get<string>(path);
 			return 0;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_json_get_value_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return -1;
 		}
 	}
 
-	node* get_node(const char* path, string& err){
+	node* get_node(const char* path, error_what& e_what){
 		if(node_ !=0) {
 			delete node_;
 			node_ = 0;
@@ -88,7 +100,9 @@ public:
 			return node_;
 		}
 		catch(boost::exception& e){
-			err = current_exception_cast<std::exception>()->what();
+			e_what.err_no(error_json_get_node_fail);
+			e_what.err_message(current_exception_cast<std::exception>()->what());
+
 			return 0;
 		}
 	}

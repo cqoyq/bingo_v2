@@ -10,6 +10,8 @@
 
 #include "../type.h"
 #include "../define.h"
+#include "../error_what.h"
+#include "tcp_error_code.h"
 
 #include <iostream>
 using namespace std;
@@ -62,13 +64,13 @@ private:
 		if (!ec){
 
 			// Call connet_success_func()
-			u8_t err_code = 0;
-			if(connet_success_func(new_handler, err_code) == 0)
+			error_what e_what;
+			if(connet_success_func(new_handler, e_what) == 0)
 				// Start to aync-read.
 				new_handler->start();
 			else{
 
-				new_handler->catch_error(err_code);
+				new_handler->catch_error(e_what);
 
 				// Active close socket.
 				new_handler->close_socket();
@@ -109,7 +111,7 @@ private:
 	}
 
 public:
-	virtual int connet_success_func(pointer /*ptr*/, u8_t& /*err_code*/){
+	virtual int connet_success_func(pointer /*ptr*/, error_what& /*err_code*/){
 		return 0;
 	}
 

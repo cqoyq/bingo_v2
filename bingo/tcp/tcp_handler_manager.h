@@ -9,6 +9,7 @@
 #define BINGO_TCP_HANDLER_MANAGER_HEADER_H_
 
 #include "../type.h"
+#include "../error_what.h"
 
 #include "tcp_handler_data.h"
 #include "tcp_error_code.h"
@@ -41,6 +42,7 @@ class tcp_handler_manager {
 public:
 
 	tcp_handler_manager(){}
+	virtual ~tcp_handler_manager(){}
 
 	// Push tcp_handler pointer into the container,
 	void push(void* hdr){
@@ -53,7 +55,7 @@ public:
 
 	// Erase tcp_handler pointer from the container,
 	// return 0 if do success, otherwise return -1.
-	int erase(const void* hdr, u8_t& err_code){
+	int erase(const void* hdr, error_what& e_what){
 
 		// lock part field.
 		mutex::scoped_lock lock(mu_);
@@ -63,19 +65,18 @@ public:
 
 		if(iter != sets_.end()){
 			sets_.erase(iter);
-
-			err_code = 0;
 			return 0;
 		}else{
 
-			err_code = error_tcp_handler_mgr_element_no_exist;
+			e_what.err_no(error_tcp_handler_mgr_element_no_exist);
+			e_what.err_message(error_tcp_handler_mgr_element_no_exist_message);
 			return  -1;
 		}
 	}
 
 	// Send data in another thread, return 0 if do success,
 	// otherwise return -1.
-	int send_data(void* hdr, const char* data, size_t data_size, u8_t& err_code){
+	int send_data(void* hdr, const char* data, size_t data_size, error_what& e_what){
 
 		// lock part field.
 		mutex::scoped_lock lock(mu_);
@@ -94,14 +95,15 @@ public:
 			return 0;
 		}else{
 
-			err_code = error_tcp_handler_mgr_element_no_exist;
+			e_what.err_no(error_tcp_handler_mgr_element_no_exist);
+			e_what.err_message(error_tcp_handler_mgr_element_no_exist_message);
 			return  -1;
 		}
 	}
 
 	// Call handler's send_close() in another thread, return 0 if do success,
 	// otherwise return -1.
-	int send_close(void* hdr, u8_t& err_code){
+	int send_close(void* hdr, error_what& e_what){
 
 		// lock part field.
 		mutex::scoped_lock lock(mu_);
@@ -115,12 +117,13 @@ public:
 			HANDLER* p0 = static_cast<HANDLER*>((*iter).handler_pointer);
 
 			if(p0){
-				p0->send_close_in_thread(error_tcp_server_close_socket_because_server);
+				p0->send_close_in_thread();
 			}
 			return 0;
 		}else{
 
-			err_code = error_tcp_handler_mgr_element_no_exist;
+			e_what.err_no(error_tcp_handler_mgr_element_no_exist);
+			e_what.err_message(error_tcp_handler_mgr_element_no_exist_message);
 			return  -1;
 		}
 	}

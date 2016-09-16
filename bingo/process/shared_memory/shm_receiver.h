@@ -9,6 +9,7 @@
 #define BINGO_PROCESS_SHARED_MEMORY_SHM_RECEIVER_HEADER_H_
 
 #include "../../define.h"
+#include "../../error_what.h"
 #include "../process_data_type.h"
 using namespace bingo;
 
@@ -39,8 +40,8 @@ template<typename PARSER,
 		 >
 class shm_receiver {
 public:
-	typedef boost::function<void(char*& data)> 								rev_succ_callback;
-	typedef boost::function<void(int& err_code, interprocess_exception& ex)> 	rev_error_callback;
+	typedef boost::function<void(char*&)> 								rev_succ_callback;
+	typedef boost::function<void(error_what&,  interprocess_exception&)> 	rev_error_callback;
 
 	shm_receiver(rev_succ_callback& f1, rev_error_callback& f2):
 		f1_(f1),
@@ -75,11 +76,11 @@ protected:
 	void send_exit_thread(){
 
 		// Send exit thread message.
-		int err_code = 0;
-		put(exit_data_, err_code);
+		error_what e_what;
+		put(exit_data_, e_what);
 	}
 
-	int put(TASK_MESSAGE_DATA& msg, int& err_code){
+	int put(TASK_MESSAGE_DATA& msg, error_what& e_what){
 
 		int counter = 0;
 		while(counter < 5){
@@ -113,7 +114,9 @@ protected:
 
 					 if(data->message_in){
 						 if(!data->cond_full.timed_wait(lock, get_system_time() + milliseconds(500))){
-							 err_code = error_process_task_send_data_fail;
+							 e_what.err_no(error_process_task_send_data_fail);
+							 e_what.err_message(error_process_task_send_data_fail_message);
+
 							 counter++;
 							 continue;
 						 }
@@ -205,8 +208,12 @@ protected:
 			while(!end_loop);
 		}
 		catch(interprocess_exception &ex){
-			int err_code = error_process_task_receive_data_fail;
-			if(f2_) f2_(err_code, ex);
+
+			error_what e_what;
+			e_what.err_no(error_process_task_receive_data_fail);
+			e_what.err_message(error_process_task_receive_data_fail_message);
+
+			if(f2_) f2_(e_what, ex);
 		}
 
 	}

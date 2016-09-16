@@ -61,13 +61,13 @@ int my_parse::max_interval_seconds_on_heartjump = 0;
 // ----------------------------- HANDLER ------------------------------ //
 class my_handler : public tcp_cet_handler<my_heartjump, my_parse, my_package>{
 public:
-	my_handler(boost::asio::io_service& io_service, function<void()> f) :
+	my_handler(boost::asio::io_service& io_service, boost::function<void()> f) :
 		tcp_cet_handler<my_heartjump, my_parse, my_package>(io_service, f){
 
 	}
 
-	void catch_error_func(pointer p, int& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 };
 
@@ -82,7 +82,7 @@ public:
 
 	}
 
-	int connet_success_func(pointer ptr, u8_t& err_code){
+	int connet_success_func(pointer ptr, error_what& e_what){
 		message_out_with_time("hdr:" << ptr.get() << ",connect success!")
 		return 0;
 	}

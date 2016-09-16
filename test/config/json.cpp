@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(t){
 	g_node.write<json_parse_handler<> >("./jsonw.xml");		// write to file
 
 	// 读测试
-	string err;
+	bingo::error_what err;
 	json_parse_handler<> json;
 	BOOST_CHECK_EQUAL(json.read("./jsonw.xml", err), 0);
 
@@ -115,12 +115,12 @@ BOOST_AUTO_TEST_CASE(t){
 	BOOST_CHECK_EQUAL(value.c_str(), "0");
 
 	BOOST_CHECK(json.get_value("application.gateways", value, err) == -1);							// read error
-	cout << "read value error:" << err << endl;
+	cout << "read value error:" << err.err_message() << endl;
 	// output:
 	//	read value error:No such node (application.gateways)
 
 	BOOST_CHECK(json.get_node("application.gateway.qa", err) == 0);					// read error
-	cout << "read node error:" << err << endl;
+	cout << "read node error:" << err.err_message() << endl;
 	// output:
 	//	read node error:No such node (application.gateway.qa)
 

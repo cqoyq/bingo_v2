@@ -62,7 +62,7 @@ public:
 
 	}
 
-	int accept_success_func(my_server::pointer /*ptr*/, u8_t& /*err_code*/){
+	int accept_success_func(my_server::pointer /*ptr*/, error_what& /*e_what*/){
 		return -1;
 	}
 };

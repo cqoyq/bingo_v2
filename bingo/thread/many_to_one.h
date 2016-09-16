@@ -9,6 +9,7 @@
 #define BINGO_THREAD_MANY_TO_ONE_HEADER_H_
 
 #include "../define.h"
+#include "../error_what.h"
 #include "thread_error_code.h"
 #include "thread_data_type.h"
 
@@ -45,13 +46,13 @@ public:
 	virtual ~many_to_one(){
 
 		// Send message to exit thread.
-		int err_code = 0;
+		error_what e_what;
 		int suc = -1;
 		TASK_MESSAGE_DATA* p = 0;
 		do{
 			p = (TASK_MESSAGE_DATA*)(new TASK_EXIT_DATA());
-			suc = put(p, err_code);
-			if(suc == -1 && err_code == error_thread_svc_has_exited)
+			suc = put(p, e_what);
+			if(suc == -1 && e_what.err_no() == error_thread_svc_has_exited)
 				break;
 		}while(suc == -1);
 
@@ -70,7 +71,7 @@ public:
 
 	}
 
-	int put(TASK_MESSAGE_DATA*& data, int& err_code){
+	int put(TASK_MESSAGE_DATA*& data, error_what& e_what){
 
 		{
 			// lock part field.
@@ -78,7 +79,9 @@ public:
 
 			// Check is_thread_exit, the value is true that thread exit.
 			if(is_thread_exit_) {
-				err_code = error_thread_svc_has_exited;
+				e_what.err_no(error_thread_svc_has_exited);
+				e_what.err_message(error_thread_svc_has_exited_message);
+
 				return -1;
 			}
 

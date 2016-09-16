@@ -15,9 +15,8 @@ namespace bingo { namespace tcp {
 template<class HANDLER>
 class tcp_cet_hdr_manager : public tcp_handler_manager<HANDLER>{
 public:
-	tcp_cet_hdr_manager() : tcp_handler_manager<HANDLER>(){
-
-	}
+	tcp_cet_hdr_manager() : tcp_handler_manager<HANDLER>(){}
+	virtual ~tcp_cet_hdr_manager(){}
 };
 
 } }

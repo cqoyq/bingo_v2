@@ -9,8 +9,13 @@
 #define BINGO_MEM_GUARD_HEADER_H_
 
 #include "string.h"
+#include "error_what.h"
 
 namespace bingo {
+
+#define error_copy_data_exceed_max_size_message "the string_ex copy data is exceed max size!"
+#define error_append_data_exceed_max_size_message "the string_ex append data is exceed max size!"
+#define error_change_length_exceed_max_size_message "the string_ex change length is exceed max size!"
 
 template<typename T>
 class mem_guard{
@@ -61,25 +66,13 @@ public:
 	}
 
 	// Copy data into block, success return 0, fail return -1.
-	int copy(const char* data, size_t data_size, u8_t& err_code){
+	int copy(const char* data, size_t data_size, error_what& e_what){
 
 		if(data_size > size_){
 
-			err_code = error_copy_data_exceed_max_size;
-			return -1;
-		}
+			e_what.err_no(error_copy_data_exceed_max_size);
+			e_what.err_message(error_copy_data_exceed_max_size_message);
 
-		memcpy(data_, data, data_size);
-		length_ = data_size;
-
-		return 0;
-	}
-
-	int copy(const char* data, size_t data_size, int& err_code){
-
-		if(data_size > size_){
-
-			err_code = error_copy_data_exceed_max_size;
 			return -1;
 		}
 
@@ -90,11 +83,12 @@ public:
 	}
 
 	// Copy data into block, success return 0, fail return -1.
-	int copy(const unsigned char* data, size_t data_size, u8_t& err_code){
+	int copy(const unsigned char* data, size_t data_size, error_what& e_what){
 
 		if(data_size > size_){
 
-			err_code = error_copy_data_exceed_max_size;
+			e_what.err_no(error_copy_data_exceed_max_size);
+			e_what.err_message(error_copy_data_exceed_max_size_message);
 			return -1;
 		}
 
@@ -105,11 +99,13 @@ public:
 	}
 
 	// Append data into block, success return 0, fail return -1.
-	int append(const char* data, size_t data_size, u8_t& err_code){
+	int append(const char* data, size_t data_size, error_what& e_what){
 
 		if((length_ + data_size) > size_){
 
-			err_code = error_append_data_exceed_max_size;
+			e_what.err_no(error_append_data_exceed_max_size);
+			e_what.err_message(error_append_data_exceed_max_size_message);
+
 			return -1;
 		}
 
@@ -131,9 +127,11 @@ public:
 
 
 	// Change length_
-	int change_length(size_t len, u8_t& err_code){
+	int change_length(size_t len, error_what& e_what){
 		if((length_ + len) > size_){
-			err_code = error_change_length_exceed_max_size;
+			e_what.err_no(error_change_length_exceed_max_size);
+			e_what.err_message(error_change_length_exceed_max_size_message);
+
 			return -1;
 		}
 

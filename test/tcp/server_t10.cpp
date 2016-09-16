@@ -66,7 +66,7 @@ public:
 				char*& rev_data,
 				size_t& rev_data_size,
 				size_t& remain_size,
-				u8_t& err_code){
+				error_what& e_what){
 
 //		string_ex t;
 //		cout << "hdr:" << p.get() << ",do read_pk_header_complete_func(), header data:" <<
@@ -82,7 +82,7 @@ public:
 				my_handler::pointer p,
 				char*& rev_data,
 				size_t& rev_data_size,
-				u8_t& err_code){
+				error_what& e_what){
 
 		if(rev_data[1] == 0x23){
 			// heartjump
@@ -96,7 +96,7 @@ public:
 	int active_send_in_ioservice_func(
 			my_handler::pointer p,
 			package*& pk,
-			u8_t& err_code){
+			error_what& e_what){
 
 		char* snd_p = pk->header();
 		if(snd_p[1] == 0x01){
@@ -110,13 +110,13 @@ public:
 
 
 
-	void catch_error_func(my_handler::pointer p, u8_t& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(my_handler::pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 
 	void close_complete_func(my_handler::pointer p, int& ec_value){
-		u8_t err_code = 0;
-		if(my_mgr::instance()->erase(p.get(), err_code) == 0){
+		error_what e_what;
+		if(my_mgr::instance()->erase(p.get(), e_what) == 0){
 //			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),success" << endl;
 		}else{
 //			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),err_code:" << err_code << endl;
@@ -139,7 +139,7 @@ public:
 
 	}
 
-	int accept_success_func(my_server::pointer ptr, u8_t& err_code){
+	int accept_success_func(my_server::pointer ptr, error_what& e_what){
 
 		my_mgr::instance()->push(ptr.get());
 //		cout << "hdr:" << ptr.get() << ",do accept_success_func() success" << endl;
@@ -158,10 +158,10 @@ void run_thread(){
 	char data[5] = {0x68, 0x01, 0x00, 0x00, 0x16};
 	size_t data_size = 5;
 
-	u8_t err_code = 0;
-	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[0], &data[0], data_size, err_code) == 0);
-	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[1], &data[0], data_size, err_code) == 0);
-	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[2], &data[0], data_size, err_code) == 0);
+	error_what e_what;
+	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[0], &data[0], data_size, e_what) == 0);
+	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[1], &data[0], data_size, e_what) == 0);
+	BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[2], &data[0], data_size, e_what) == 0);
 
 }
 

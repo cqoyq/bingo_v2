@@ -64,7 +64,7 @@ public:
 				char*& rev_data,
 				size_t& rev_data_size,
 				size_t& remain_size,
-				u8_t& err_code){
+				error_what& e_what){
 
 //		string_ex t;
 //		cout << "hdr:" << p.get() << ",do read_pk_header_complete_func(), header data:" <<
@@ -79,7 +79,7 @@ public:
 				my_handler::pointer p,
 				char*& rev_data,
 				size_t& rev_data_size,
-				u8_t& err_code){
+				error_what& e_what){
 
 //		string_ex t;
 //		cout << "hdr:" << p.get() << ",do read_pk_full_complete_func(), data:" <<
@@ -101,8 +101,8 @@ public:
 
 
 
-	void catch_error_func(my_handler::pointer p, u8_t& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(my_handler::pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 
 	void close_complete_func(my_handler::pointer p, int& ec_value){
@@ -130,7 +130,7 @@ public:
 
 	}
 
-	int accept_success_func(my_server::pointer ptr, u8_t& err_code){
+	int accept_success_func(my_server::pointer ptr, error_what& e_what){
 
 		my_mgr::instance()->push(ptr.get());
 		cout << "hdr:" << ptr.get() << ",do accept_success_insert_handler_mgr()" << endl;
@@ -148,7 +148,7 @@ void run_thread(int& n){
 	if(handler_pointers.size() > 0){
 
 		u32_t idx = n -1;
-		u8_t err_code = 0;
+		error_what e_what;
 
 
 		for (int i = 0; i < 10; ++i) {
@@ -162,10 +162,10 @@ void run_thread(int& n){
 //			bingo::string_ex t;
 //			cout << "thread data:" << t.stream_to_string(&data[0], data_size) << endl;
 
-			BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[idx], &data[0], data_size, err_code) == 0);
+			BOOST_CHECK(my_mgr::instance()->send_data(handler_pointers[idx], &data[0], data_size, e_what) == 0);
 		}
 
-		BOOST_CHECK(my_mgr::instance()->send_close(handler_pointers[idx], err_code) == 0);
+		BOOST_CHECK(my_mgr::instance()->send_close(handler_pointers[idx], e_what) == 0);
 	}
 }
 

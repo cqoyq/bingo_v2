@@ -69,7 +69,7 @@ int snd_amount = 0;
 
 class my_handler : public tcp_cet_handler<my_heartjump, my_parse, my_package>{
 public:
-	my_handler(boost::asio::io_service& io_service, function<void()> f) :
+	my_handler(boost::asio::io_service& io_service, boost::function<void()> f) :
 		tcp_cet_handler<my_heartjump, my_parse, my_package>(io_service, f){
 
 	}
@@ -79,7 +79,7 @@ public:
 				char*& rev_data,
 				size_t& rev_data_size,
 				size_t& remain_size,
-				int& err_code){
+				error_what& e_what){
 
 		remain_size = 5 + 2 + 4 + 1;
 
@@ -90,7 +90,7 @@ public:
 				pointer p,
 				char*& rev_data,
 				size_t& rev_data_size,
-				int& err_code){
+				error_what& e_what){
 		rev_amount++;
 		string_ex t;
 		cout << "hdr:" << p.get() << ",rev_amount:" << rev_amount << ",read message:" <<
@@ -112,13 +112,13 @@ public:
 
 
 
-	void catch_error_func(pointer p, int& err_code){
-		cout << "hdr:" << p.get() << ",err_code:" << (int)err_code << ",do catch_error()" << endl;
+	void catch_error_func(pointer p, error_what& e_what){
+		cout << "hdr:" << p.get() << ",err_code:" << e_what.err_no() << ",do catch_error()" << endl;
 	}
 
 	void close_complete_func(my_handler::pointer p, int& ec_value){
-		u8_t err_code = 0;
-		if(my_mgr::instance()->erase(p.get(), err_code) == 0){
+		error_what e_what;
+		if(my_mgr::instance()->erase(p.get(), e_what) == 0){
 //			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),success" << endl;
 		}else{
 //			cout << "hdr:" << p.get() << ",do close_completed_erase_hander_mgr(),err_code:" << err_code << endl;
@@ -137,7 +137,7 @@ public:
 
 	}
 
-	int connet_success_func(pointer ptr, u8_t& err_code){
+	int connet_success_func(pointer ptr, error_what& e_what){
 		message_out_with_time("hdr:" << ptr.get() << ",connect success!")
 
 		my_mgr::instance()->push(ptr.get());

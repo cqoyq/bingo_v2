@@ -15,6 +15,9 @@ enum {
 	error_process_task_receive_data_fail	= 0x02,
 };
 
+#define error_process_task_send_data_fail_message "the process task send data fail!"
+#define error_process_task_receive_data_fail_message "the process taks receive data fail!"
+
 } } }
 
 
