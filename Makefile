@@ -22,6 +22,12 @@ OBJS =  main.o \
 		bingo/config/json/parse_handler.o \
 		bingo/config/xml/parse_handler.o \
 		bingo/log/logger.o \
+		bingo/database/db_field.o \
+		bingo/database/db_row.o \
+		bingo/database/db_result.o \
+		bingo/database/db_factory.o \
+		bingo/database/db_connector.o \
+		bingo/database/mysql/mysql_visitor.o \
 		bingo/string.o \
 		test/string_ex.o \
 		test/singleton.o \
@@ -51,10 +57,17 @@ OBJS =  main.o \
 		test/thread/many_to_many_t2.o \
 		test/thread/many_to_many_t3.o \
 		test/thread/many_to_many_t4.o \
-		test/process/shm_t.o
+		test/process/shm_t.o \
+		test/database/test_mysql_visitor.o
 		
 CPPS =  bingo/string.cpp \
 		bingo/log/logger.cpp \
+		bingo/database/db_field.cpp \
+		bingo/database/db_row.cpp \
+		bingo/database/db_result.cpp \
+		bingo/database/db_factory.cpp \
+		bingo/database/db_connector.cpp \
+		bingo/database/mysql/mysql_visitor.cpp \
 		bingo/config/xml/parse_handler.cpp \
 		bingo/config/json/parse_handler.cpp
 		
@@ -89,7 +102,9 @@ clean:
 else ifeq ($(findstring Lib_,$(ConfigName)),Lib_)
 all:
 	$(CXX)  $(CXXFLAGS) -o $(TARGET) $(CPPS) $(LIBS) $(LIBPATH);
-	cp  $(TARGET) $(MY_LIB_ROOT)
+	cp $(TARGET) $(MY_LIB_ROOT);
+	cp -fR bingo $(MY_LIB_ROOT);
+	find $(MY_LIB_ROOT)/bingo/ -regextype "posix-egrep" -regex '.*\.(o|cpp)' -exec rm -rf {} \;
 
 clean:
 	rm -f $(TARGET)

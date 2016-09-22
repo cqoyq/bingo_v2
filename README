@@ -36,3 +36,6 @@ Project libbingo version history:
 	
 # v1.0.1_r10
 	1. provide error_what class.
+	
+# v1.0.1_n11
+	1. add mysql database visitor.
