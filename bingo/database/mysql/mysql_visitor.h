@@ -8,8 +8,8 @@
 #ifndef BINGO_DATABASE_MYSQL_MYSQL_VISITOR_H_
 #define BINGO_DATABASE_MYSQL_MYSQL_VISITOR_H_
 
-#include "../db_visitor.h"
-#include "../db_connector.h"
+#include "bingo/database/db_visitor.h"
+#include "bingo/database/db_connector.h"
 
 namespace bingo { namespace database { namespace mysql {
 

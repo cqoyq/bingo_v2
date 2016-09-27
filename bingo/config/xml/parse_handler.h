@@ -8,9 +8,9 @@
 #ifndef BINGO_CONFIG_XML_PARSE_HANDLER_HEADER_H_
 #define BINGO_CONFIG_XML_PARSE_HANDLER_HEADER_H_
 
-#include "../../foreach_.h"
-#include "../../error_what.h"
-#include "../node.h"
+#include "bingo/foreach_.h"
+#include "bingo/error_what.h"
+#include "bingo/config/node.h"
 using bingo::config::node;
 
 #include <boost/exception/all.hpp>

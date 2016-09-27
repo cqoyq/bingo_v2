@@ -8,9 +8,9 @@
 #ifndef BINGO_PROCESS_SHARED_MEMORY_SHM_RECEIVER_HEADER_H_
 #define BINGO_PROCESS_SHARED_MEMORY_SHM_RECEIVER_HEADER_H_
 
-#include "../../define.h"
-#include "../../error_what.h"
-#include "../process_data_type.h"
+#include "bingo/define.h"
+#include "bingo/error_what.h"
+#include "bingo/process/process_data_type.h"
 using namespace bingo;
 
 #include "error_code.h"

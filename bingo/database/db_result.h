@@ -13,7 +13,7 @@
 #include <string.h>
 using namespace std;
 
-#include "../type.h"
+#include "bingo/type.h"
 #include "db_row.h"
 
 namespace bingo { namespace database {

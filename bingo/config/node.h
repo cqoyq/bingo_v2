@@ -5,8 +5,8 @@
  *      Author: root
  */
 
-#ifndef CFG_NODE_H_
-#define CFG_NODE_H_
+#ifndef BINGO_CONFIG__NODE_H_
+#define BINGO_CONFIG__NODE_H_
 
 #include <exception>
 #include <string>
@@ -135,4 +135,4 @@ private:
 }  }
 
 
-#endif /* CFG_NODE_H_ */
+#endif /* BINGO_CONFIG__NODE_H_ */

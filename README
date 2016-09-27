@@ -39,3 +39,7 @@ Project libbingo version history:
 	
 # v1.0.1_n11
 	1. add mysql database visitor.
+	
+# v1.0.1_r12
+	1. add string_append class in bingo/string.h.
+	2. modify include file path from relative to absolute.

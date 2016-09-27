@@ -8,8 +8,8 @@
 #ifndef BINGO_PROCESS_SHARED_MEMORY_SHM_DATA_HEADER_H_
 #define BINGO_PROCESS_SHARED_MEMORY_SHM_DATA_HEADER_H_
 
-#include "../../type.h"
-#include "../../thread/thread_data_type.h"
+#include "bingo/type.h"
+#include "bingo/thread/thread_data_type.h"
 using namespace bingo::thread;
 
 #include <boost/interprocess/shared_memory_object.hpp>

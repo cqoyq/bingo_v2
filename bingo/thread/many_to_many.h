@@ -8,8 +8,8 @@
 #ifndef BINGO_THREAD_MANY_TO_MANY_HEADER_H_
 #define BINGO_THREAD_MANY_TO_MANY_HEADER_H_
 
-#include "../define.h"
-#include "../error_what.h"
+#include "bingo/define.h"
+#include "bingo/error_what.h"
 #include "thread_error_code.h"
 #include "thread_data_type.h"
 

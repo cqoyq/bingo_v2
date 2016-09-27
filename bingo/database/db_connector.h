@@ -11,7 +11,7 @@
 #include <string>
 using namespace std;
 
-#include "../type.h"
+#include "bingo/type.h"
 
 namespace bingo { namespace database {
 

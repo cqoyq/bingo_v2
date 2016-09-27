@@ -8,8 +8,8 @@
 #ifndef BINGO_TCP_SVR_HDR_MANAGER_HEADER_H_
 #define BINGO_TCP_SVR_HDR_MANAGER_HEADER_H_
 
-#include "../foreach_.h"
-#include "../error_what.h"
+#include "bingo/foreach_.h"
+#include "bingo/error_what.h"
 #include "tcp_handler_manager.h"
 #include "tcp_error_code.h"
 

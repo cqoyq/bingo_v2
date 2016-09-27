@@ -8,8 +8,8 @@
 #ifndef BINGO_THREAD_THREAD_DATA_TYPE_HEADER_H_
 #define BINGO_THREAD_THREAD_DATA_TYPE_HEADER_H_
 
-#include "../type.h"
-#include "../mem_guard.h"
+#include "bingo/type.h"
+#include "bingo/mem_guard.h"
 
 namespace bingo { namespace thread {
 

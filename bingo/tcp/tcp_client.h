@@ -8,9 +8,9 @@
 #ifndef BINGO_TCP_CLIENT_HEADER_H_
 #define BINGO_TCP_CLIENT_HEADER_H_
 
-#include "../type.h"
-#include "../define.h"
-#include "../error_what.h"
+#include "bingo/type.h"
+#include "bingo/define.h"
+#include "bingo/error_what.h"
 #include "tcp_error_code.h"
 
 #include <iostream>

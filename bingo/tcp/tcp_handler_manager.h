@@ -8,8 +8,8 @@
 #ifndef BINGO_TCP_HANDLER_MANAGER_HEADER_H_
 #define BINGO_TCP_HANDLER_MANAGER_HEADER_H_
 
-#include "../type.h"
-#include "../error_what.h"
+#include "bingo/type.h"
+#include "bingo/error_what.h"
 
 #include "tcp_handler_data.h"
 #include "tcp_error_code.h"

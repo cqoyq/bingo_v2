@@ -8,7 +8,7 @@
 #ifndef BINGO_LOG_LOG_DATA_HEADER_H_
 #define BINGO_LOG_LOG_DATA_HEADER_H_
 
-#include "../string.h"
+#include "bingo/string.h"
 
 namespace bingo { namespace log {
 

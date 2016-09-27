@@ -18,6 +18,8 @@ using namespace std;
 
 namespace bingo {
 
+// -------------------------------------------------------  string_ex -------------------------------------------------------- //
+
 class string_ex {
 private:
 	stringstream 		oss_;
@@ -85,6 +87,26 @@ public:
 	const char* convert(const char& t);
 
 	const char* convert(const u8_t& t);
+};
+
+// -------------------------------------------------------  string_append -------------------------------------------------------- //
+
+class string_append{
+public:
+	template<typename T>
+	string_append* add(T t){
+		string_ex st;
+		data.append(st.convert(t));
+		return this;
+
+	};
+
+	string& to_string(){
+		return data;
+	}
+
+private:
+	string data;
 };
 
 }

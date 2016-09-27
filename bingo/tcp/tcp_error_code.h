@@ -8,7 +8,7 @@
 #ifndef BINGO_TCP_ERROR_CODE_HEADER_H_
 #define BINGO_TCP_ERROR_CODE_HEADER_H_
 
-#include "../error_what.h"
+#include "bingo/error_what.h"
 
 namespace bingo { namespace tcp {
 

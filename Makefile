@@ -1,5 +1,6 @@
 INCLUDE = -I$(BOOST_INCLUDE_ROOT) \
-          -I$(MYSQL_INCLUDE_ROOT)
+          -I$(MYSQL_INCLUDE_ROOT) \
+          -I./
 
 LIBS = -lpthread \
 	   -lmysqlclient_r \

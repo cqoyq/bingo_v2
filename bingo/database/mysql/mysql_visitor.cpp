@@ -6,8 +6,8 @@
  */
 
 #include <mysql.h>
-#include "../error_code.h"
-#include "../db_result.h"
+#include "bingo/database/error_code.h"
+#include "bingo/database/db_result.h"
 
 #include "mysql_visitor.h"
 

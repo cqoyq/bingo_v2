@@ -11,7 +11,7 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 
 #include "db_result.h"
-#include "../error_what.h"
+#include "bingo/error_what.h"
 
 namespace bingo { namespace database {
 

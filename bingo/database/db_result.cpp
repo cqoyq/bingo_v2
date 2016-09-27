@@ -6,7 +6,7 @@
  */
 
 #include <boost/algorithm/string.hpp>
-#include "../foreach_.h"
+#include "bingo/foreach_.h"
 
 #include "db_result.h"
 

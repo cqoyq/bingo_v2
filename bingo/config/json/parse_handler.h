@@ -10,9 +10,9 @@
 
 #include <iostream>
 
-#include "../../foreach_.h"
-#include "../../error_what.h"
-#include "../node.h"
+#include "bingo/foreach_.h"
+#include "bingo/error_what.h"
+#include "bingo/config/node.h"
 using bingo::config::node;
 
 #include <boost/property_tree/json_parser.hpp>
