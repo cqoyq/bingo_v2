@@ -22,6 +22,10 @@ using namespace boost::posix_time;
 
 namespace bingo { namespace log {
 
+// Log's level is translate to string.
+string level_to_string(int level);
+
+// Log class.
 class logger {
 public:
 	logger();

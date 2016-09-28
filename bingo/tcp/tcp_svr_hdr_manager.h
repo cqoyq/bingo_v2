@@ -11,7 +11,6 @@
 #include "bingo/foreach_.h"
 #include "bingo/error_what.h"
 #include "tcp_handler_manager.h"
-#include "tcp_error_code.h"
 
 namespace bingo { namespace tcp {
 

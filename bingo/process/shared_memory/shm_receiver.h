@@ -13,7 +13,6 @@
 #include "bingo/process/process_data_type.h"
 using namespace bingo;
 
-#include "error_code.h"
 #include "shm_data.h"
 using namespace bingo::process::shared_memory;
 

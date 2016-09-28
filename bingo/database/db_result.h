@@ -10,7 +10,7 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
-#include <string.h>
+#include <string>
 using namespace std;
 
 #include "bingo/type.h"

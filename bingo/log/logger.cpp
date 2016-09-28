@@ -9,6 +9,34 @@
 
 using namespace bingo::log;
 
+string bingo::log::level_to_string(int level){
+	string out;
+	switch(level){
+	case 0:
+			out.append("off");
+			break;
+	case 1:
+			out.append("fatal");
+			break;
+	case 2:
+			out.append("error");
+			break;
+	case 3:
+			out.append("info");
+			break;
+	case 4:
+			out.append("debug");
+			break;
+	case 5:
+			out.append("all");
+			break;
+	default:
+		out.append("unknow");
+	}
+
+	return out;
+}
+
 #define get_now(now) { \
 		ptime p1 = boost::posix_time::microsec_clock::local_time(); \
 		int year = p1.date().year(); \
@@ -46,9 +74,9 @@ void logger::log_f(const char* tag, log_data& data){
 		get_now(now);
 		msg.append(now);
 		msg.append("@");
-		msg.append("fatal");
-		msg.append("@");
 		msg.append(tag);
+		msg.append("@");
+		msg.append("fatal");
 		msg.append("@");
 		msg.append(data.str());
 
@@ -67,9 +95,9 @@ void logger::log_e(const char* tag, log_data& data){
 		get_now(now);
 		msg.append(now);
 		msg.append("@");
-		msg.append("error");
-		msg.append("@");
 		msg.append(tag);
+		msg.append("@");
+		msg.append("error");
 		msg.append("@");
 		msg.append(data.str());
 
@@ -87,9 +115,9 @@ void logger::log_i(const char* tag, log_data& data){
 		get_now(now);
 		msg.append(now);
 		msg.append("@");
-		msg.append("info");
-		msg.append("@");
 		msg.append(tag);
+		msg.append("@");
+		msg.append("info");
 		msg.append("@");
 		msg.append(data.str());
 
@@ -107,9 +135,9 @@ void logger::log_d(const char* tag, log_data& data){
 		get_now(now);
 		msg.append(now);
 		msg.append("@");
-		msg.append("debug");
-		msg.append("@");
 		msg.append(tag);
+		msg.append("@");
+		msg.append("debug");
 		msg.append("@");
 		msg.append(data.str());
 

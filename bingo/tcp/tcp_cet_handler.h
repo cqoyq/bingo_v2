@@ -12,7 +12,6 @@
 #include "bingo/define.h"
 #include "bingo/mem_guard.h"
 #include "bingo/error_what.h"
-#include "tcp_error_code.h"
 
 #include <iostream>
 using namespace std;

@@ -18,6 +18,5 @@ using namespace bingo;
 #include "shared_memory/shm_data.h"
 #include "shared_memory/shm_receiver.h"
 #include "shared_memory/shm_sender.h"
-#include "shared_memory/error_code.h"
 
 #endif /* BINGO_PROCESS_ALL_HEADER_H_ */

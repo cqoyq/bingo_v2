@@ -13,7 +13,6 @@
 #include "../singleton.h"
 using namespace bingo;
 
-#include "tcp_error_code.h"
 #include "tcp_handler_data.h"
 #include "tcp_handler_manager.h"
 

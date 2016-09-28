@@ -12,7 +12,6 @@
 #include "bingo/error_what.h"
 
 #include "tcp_handler_data.h"
-#include "tcp_error_code.h"
 
 #include <vector>
 #include <iostream>

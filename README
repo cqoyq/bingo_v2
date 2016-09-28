@@ -47,3 +47,8 @@ Project libbingo version history:
 # v1.0.1_r13
 	1. add 'rm' command after compile.
 	
+# v1.0.1_r14
+	1. move error_code into error_what.h.
+	2. change logger's tag and level order.
+	
+	

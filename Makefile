@@ -30,6 +30,7 @@ OBJS =  main.o \
 		bingo/database/db_connector.o \
 		bingo/database/mysql/mysql_visitor.o \
 		bingo/string.o \
+		bingo/error_what.o \
 		test/string_ex.o \
 		test/singleton.o \
 		test/mem_guard.o \
@@ -62,6 +63,7 @@ OBJS =  main.o \
 		test/database/test_mysql_visitor.o
 		
 CPPS =  bingo/string.cpp \
+		bingo/error_what.cpp \
 		bingo/log/logger.cpp \
 		bingo/database/db_field.cpp \
 		bingo/database/db_row.cpp \

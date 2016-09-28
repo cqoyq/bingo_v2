@@ -10,7 +10,6 @@
 
 #include "bingo/define.h"
 #include "bingo/error_what.h"
-#include "thread_error_code.h"
 #include "thread_data_type.h"
 
 #include <queue>

@@ -8,7 +8,8 @@
 #ifndef BINGO_STRING_HEADER_H_
 #define BINGO_STRING_HEADER_H_
 
-#include <string.h>
+#include <string>
+#include <memory.h>
 #include <stdio.h>
 #include <iostream>
  #include <sstream>

@@ -9,7 +9,6 @@
 #define BINGO_THREAD_ALL_HEADER_H_
 
 #include "thread_data_type.h"
-#include "thread_error_code.h"
 
 #include "many_to_one.h"
 #include "many_to_many.h"

@@ -11,7 +11,6 @@
 #include "bingo/define.h"
 #include "bingo/error_what.h"
 
-#include "error_code.h"
 #include "shm_data.h"
 using namespace bingo::process::shared_memory;
 
