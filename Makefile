@@ -103,6 +103,7 @@ clean:
 else ifeq ($(findstring Lib_,$(ConfigName)),Lib_)
 all:
 	$(CXX)  $(CXXFLAGS) -o $(TARGET) $(CPPS) $(LIBS) $(LIBPATH);
+	rm -fR $(MY_LIB_ROOT)/bingo
 	cp $(TARGET) $(MY_LIB_ROOT);
 	cp -fR bingo $(MY_LIB_ROOT);
 	find $(MY_LIB_ROOT)/bingo/ -regextype "posix-egrep" -regex '.*\.(o|cpp)' -exec rm -rf {} \;

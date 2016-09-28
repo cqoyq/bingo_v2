@@ -43,3 +43,7 @@ Project libbingo version history:
 # v1.0.1_r12
 	1. add string_append class in bingo/string.h.
 	2. modify include file path from relative to absolute.
+	
+# v1.0.1_r13
+	1. add 'rm' command after compile.
+	
