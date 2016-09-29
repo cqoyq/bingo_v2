@@ -18,7 +18,10 @@ using namespace boost;
 
 void string_ex::clear(){
 
+	// Clear stringstream.
 	oss_.clear();
+	oss_.str("");
+
 	str_ .clear();
 	memset(&chr_[0], 0x00, MAX_SIZE_OF_CHR);
 }
