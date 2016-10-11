@@ -51,4 +51,7 @@ Project libbingo version history:
 	1. move error_code into error_what.h.
 	2. change logger's tag and level order.
 	
+# v1.1.1_r1
+	1. add get node by name method.
+	
 	

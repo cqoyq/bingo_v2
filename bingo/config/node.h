@@ -14,6 +14,8 @@ using namespace std;
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
+#include "bingo/foreach_.h"
+
 namespace bingo { namespace config {
 
 // Exception that attribute isn't exist.
@@ -37,69 +39,35 @@ struct node_attr{
 // Node attribute set class
 class node_attr_set{
 public:
-	node_attr_set& push_back(node_attr* n){
-		set.push_back(n);
-		return (*this);
-	}
+	node_attr_set& push_back(node_attr* n);
 
-	node_attr* operator[](int index){
-		int max = set.size() - 1;
-		if(index <= max)
-			return &(set[index]);
-		else
-			return 0;
-	}
+	node_attr* operator[](int index);
 
-	node_attr* operator[](const char* attr_name){
-		node_attr* p = 0;
-		int max = set.size();
-		for (int i = 0; i < max; i++) {
-			if(set[i].name.compare(attr_name) == 0){
-				p = &(set[i]);
-				break;
-			}
-		}
-		return p;
-	}
+	node_attr* operator[](const char* attr_name);
 
-	size_t size(){
-		return set.size();
-	}
+	size_t size();
 
-	boost::ptr_vector<node_attr>& collection(){
-		return set;
-	}
+	boost::ptr_vector<node_attr>& collection();
 
 private:
 	boost::ptr_vector<node_attr> set;
 };
 
-class node;
+struct node;
 
 // Node set class.
 class node_set{
 public:
 	// Return add node.
-	node* push_back(node* n){
-		set.push_back(n);
-		return n;
-	}
+	node* push_back(node* n);
 
-	node* operator[](int index){
-		int max = set.size() - 1;
-		if(index <= max)
-			return &(set[index]);
-		else
-			return 0;
-	}
+	node* operator[](int index);
 
-	size_t size(){
-		return set.size();
-	}
+	node* operator[](const char* name);
 
-	boost::ptr_vector<node>& collection(){
-		return set;
-	}
+	size_t size();
+
+	boost::ptr_vector<node>& collection();
 
 private:
 	boost::ptr_vector<node> set;

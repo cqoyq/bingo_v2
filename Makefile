@@ -20,6 +20,7 @@ LIBPATH = -L$(BOOST_LIB_ROOT) \
 		   -L$(MYSQL_LIB_ROOT)
 
 OBJS =  main.o \
+		bingo/config/node.o \
 		bingo/config/json/parse_handler.o \
 		bingo/config/xml/parse_handler.o \
 		bingo/log/logger.o \
@@ -71,6 +72,7 @@ CPPS =  bingo/string.cpp \
 		bingo/database/db_factory.cpp \
 		bingo/database/db_connector.cpp \
 		bingo/database/mysql/mysql_visitor.cpp \
+		bingo/config/node.cpp \
 		bingo/config/xml/parse_handler.cpp \
 		bingo/config/json/parse_handler.cpp
 		
