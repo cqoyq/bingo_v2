@@ -63,3 +63,6 @@ Project libbingo version history:
 # v1.1.1_r4
 	1. erase db_factory from Makefile.
 	
+# v1.1.1_r5
+	1. erase db_factory from all.h.
+	

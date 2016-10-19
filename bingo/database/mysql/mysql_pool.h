@@ -8,7 +8,6 @@
 #ifndef BINGO_DATABASE_MYSQL_MYSQL_POOL_H_
 #define BINGO_DATABASE_MYSQL_MYSQL_POOL_H_
 
-#include "bingo/singleton.h"
 #include "bingo/error_what.h"
 #include "bingo/database/db_connector.h"
 #include "mysql_connector.h"
@@ -55,8 +54,6 @@ protected:
 
 	error_what err_;
 };
-
-typedef bingo::singleton_v0<mysql_pool> MYSQL_POOL_TYPE;
 
 } } }
 

@@ -7,6 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "bingo/singleton.h"
 #include "bingo/define.h"
 #include "bingo/error_what.h"
 #include "bingo/database/mysql/all.h"
@@ -18,10 +19,12 @@ using namespace boost::posix_time;
 
 BOOST_AUTO_TEST_SUITE(test_database_mysql_pool)
 
+typedef bingo::singleton_v0<mysql::mysql_pool> MYSQL_POOL_TYPE;
+
 void run(){
 	db_connector conn_info("192.168.1.104", "mysql", "root", "1234", 3306);
-	if(mysql::MYSQL_POOL_TYPE::instance()->make_connector_pool(4, &conn_info) == -1){
-		cout << "create database fail! err_msg:" << mysql::MYSQL_POOL_TYPE::instance()->err().err_message() << endl;
+	if(MYSQL_POOL_TYPE::instance()->make_connector_pool(4, &conn_info) == -1){
+		cout << "create database fail! err_msg:" << MYSQL_POOL_TYPE::instance()->err().err_message() << endl;
 	}else{
 		cout << "create database success!" << endl;
 	}
@@ -31,12 +34,12 @@ void run(){
 // 1. Create mysql pool fail because mysql server close.
 // 2.  Create mysql pool success, after 1 minute,  mysql server close, each item in pool will reconnect.
 BOOST_AUTO_TEST_CASE(t_pool){
-	mysql::MYSQL_POOL_TYPE::construct();
+	MYSQL_POOL_TYPE::construct();
 
 	boost::thread t(run);
 	t.join();
 
-	mysql::MYSQL_POOL_TYPE::release();
+	MYSQL_POOL_TYPE::release();
 }
 
 void exe_sql(){
@@ -45,7 +48,7 @@ void exe_sql(){
 	while(i <= max){
 		this_thread::sleep(seconds(5));
 
-		mysql::mysql_connector* conn = mysql::MYSQL_POOL_TYPE::instance()->get_connector();
+		mysql::mysql_connector* conn = MYSQL_POOL_TYPE::instance()->get_connector();
 
 		string sql = "select version();";
 
@@ -54,7 +57,7 @@ void exe_sql(){
 		message_out_with_time("mysql hdr:" << conn->get_mysql() << ",query result:" << conn->query_result(sql.c_str(), res, er))
 		delete res;
 
-		mysql::MYSQL_POOL_TYPE::instance()->free_connector(conn);
+		MYSQL_POOL_TYPE::instance()->free_connector(conn);
 
 		i++;
 	}
@@ -65,14 +68,14 @@ void exe_sql(){
 // 1. execute sql in pool.
 BOOST_AUTO_TEST_CASE(t_exe_sql){
 
-	mysql::MYSQL_POOL_TYPE::construct();
+	MYSQL_POOL_TYPE::construct();
 
 	boost::thread t(run);
 	boost::thread t1(exe_sql);
 	t.join();
 	t1.join();
 
-	mysql::MYSQL_POOL_TYPE::release();
+	MYSQL_POOL_TYPE::release();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

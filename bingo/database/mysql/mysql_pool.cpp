@@ -8,6 +8,7 @@
 #include "mysql_pool.h"
 #include "mysql_timer.h"
 using namespace bingo::database::mysql;
+
 #include "bingo/define.h"
 using namespace bingo;
 
