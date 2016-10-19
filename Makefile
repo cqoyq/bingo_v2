@@ -27,7 +27,6 @@ OBJS =  main.o \
 		bingo/database/db_field.o \
 		bingo/database/db_row.o \
 		bingo/database/db_result.o \
-		bingo/database/db_factory.o \
 		bingo/database/db_connector.o \
 		bingo/database/mysql/mysql_visitor.o \
 		bingo/database/mysql/mysql_connector.o \
@@ -73,7 +72,6 @@ CPPS =  bingo/string.cpp \
 		bingo/database/db_field.cpp \
 		bingo/database/db_row.cpp \
 		bingo/database/db_result.cpp \
-		bingo/database/db_factory.cpp \
 		bingo/database/db_connector.cpp \
 		bingo/database/mysql/mysql_visitor.cpp \
 		bingo/database/mysql/mysql_connector.cpp \
