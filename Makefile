@@ -30,6 +30,9 @@ OBJS =  main.o \
 		bingo/database/db_factory.o \
 		bingo/database/db_connector.o \
 		bingo/database/mysql/mysql_visitor.o \
+		bingo/database/mysql/mysql_connector.o \
+		bingo/database/mysql/mysql_pool.o \
+		bingo/database/mysql/mysql_timer.o \
 		bingo/string.o \
 		bingo/error_what.o \
 		test/string_ex.o \
@@ -61,7 +64,8 @@ OBJS =  main.o \
 		test/thread/many_to_many_t3.o \
 		test/thread/many_to_many_t4.o \
 		test/process/shm_t.o \
-		test/database/test_mysql_visitor.o
+		test/database/test_mysql_visitor.o \
+		test/database/test_mysql_pool.o
 		
 CPPS =  bingo/string.cpp \
 		bingo/error_what.cpp \
@@ -72,6 +76,9 @@ CPPS =  bingo/string.cpp \
 		bingo/database/db_factory.cpp \
 		bingo/database/db_connector.cpp \
 		bingo/database/mysql/mysql_visitor.cpp \
+		bingo/database/mysql/mysql_connector.cpp \
+		bingo/database/mysql/mysql_pool.cpp \
+		bingo/database/mysql/mysql_timer.cpp \
 		bingo/config/node.cpp \
 		bingo/config/xml/parse_handler.cpp \
 		bingo/config/json/parse_handler.cpp
@@ -80,7 +87,8 @@ ifeq ($(ShowDebug),y)
 DEBUGS = -DBINGO_TCP_SERVER_DEBUG \
 		 -DBINGO_TCP_CLIENT_DEBUG \
 		 -DBINGO_THREAD_TASK_DEBUG \
-		 -DBINGO_PROCESS_SHARED_MEMORY_DEBUG
+		 -DBINGO_PROCESS_SHARED_MEMORY_DEBUG \
+		 -DBINGO_MYSQL_DEBUG
 else
 DEBUGS =
 endif

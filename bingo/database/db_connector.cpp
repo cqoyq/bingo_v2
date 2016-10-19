@@ -15,6 +15,15 @@ db_connector::db_connector() {
 	port_ = 0;
 }
 
+db_connector::db_connector(const char* ip, const char* db, const char* user, const char* pwd, u32_t port):
+	ip_(ip),
+	dbname_(db),
+	user_(user),
+	pwd_(pwd),
+	port_(port){
+
+}
+
 db_connector::~db_connector() {
 	// TODO Auto-generated destructor stub
 }

@@ -18,6 +18,7 @@ namespace bingo { namespace database {
 class db_connector {
 public:
 	db_connector();
+	db_connector(const char* ip, const char* db, const char* user, const char* pwd, u32_t port);
 	virtual ~db_connector();
 
 	const char* ip();

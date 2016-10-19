@@ -54,4 +54,7 @@ Project libbingo version history:
 # v1.1.1_r1
 	1. add get node by name method.
 	
+# v1.1.1_r2
+	1. add mysql pool.
+	
 	

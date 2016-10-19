@@ -16,6 +16,8 @@
 #include "../db_visitor.h"
 
 #include "mysql_visitor.h"
+#include "mysql_connector.h"
+#include "mysql_pool.h"
 
 
 #endif /* BINGO_DATABASE_MYSQL_ALL_H_ */
