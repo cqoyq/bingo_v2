@@ -49,8 +49,8 @@ string bingo::log::level_to_string(int level){
 		\
 		int millsecond = p1.time_of_day().total_milliseconds() - p1.time_of_day().total_seconds()*1000; \
 		\
-		char ctime[20]; \
-		memset(&ctime[0], 0x00, 20); \
+		char ctime[25]; \
+		memset(&ctime[0], 0x00, 25); \
 		\
 		sprintf(&ctime[0], "%4d-%02d-%02d %02d:%02d:%02d.%03d", year, month, day, hour, minute, second, millsecond); \
 		now.append(ctime); \
