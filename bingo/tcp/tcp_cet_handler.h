@@ -142,7 +142,7 @@ public:
 		ios_.post(bind(&tcp_cet_handler::active_close, this->shared_from_this()));
 	}
 
-private:
+protected:
 
 	void reconnet(){
 		f_();

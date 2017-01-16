@@ -69,3 +69,5 @@ Project libbingo version history:
 # v1.1.1_r7
 	1. fix ctime[] outbound.
 	
+# v1.2.0
+	1. change private method to protected in tcp handler.

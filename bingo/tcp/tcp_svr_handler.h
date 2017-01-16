@@ -214,7 +214,7 @@ public:
 
 
 
-private:
+protected:
 
 
 	void read_handler(const boost::system::error_code& ec,

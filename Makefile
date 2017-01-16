@@ -92,13 +92,13 @@ DEBUGS =
 endif
 
 ifeq ($(findstring Test_Debug,$(ConfigName)),Test_Debug)
-	CXXFLAGS =	-O2 -g -Wall -fmessage-length=0 -std=c++11 $(DEBUGS) $(INCLUDE) 
+	CXXFLAGS =	-O0 -g -Wall -fmessage-length=0 -std=c++11 $(DEBUGS) $(INCLUDE) 
 	TARGET = mytest
 else ifeq ($(findstring Lib_Debug,$(ConfigName)),Lib_Debug)
-	CXXFLAGS =	-O2 -g -fPIC  -shared -std=c++11 $(INCLUDE)
+	CXXFLAGS =	-O0 -g -fPIC  -shared -std=c++11 $(DEBUGS) $(INCLUDE)
 	TARGET = libbingo.so
 else ifeq ($(findstring Lib_Release,$(ConfigName)),Lib_Release)
-	CXXFLAGS =	-O2 -fPIC  -shared -std=c++11 $(INCLUDE)
+	CXXFLAGS =	-O2 -fPIC  -shared -std=c++11 $(DEBUGS)  $(INCLUDE)
 	TARGET = libbingo.so
 endif
 
