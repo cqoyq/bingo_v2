@@ -402,6 +402,16 @@ protected:
 			error_what& e_what){
 
 		if(ori_data_size > package_size_){
+
+#ifdef BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR
+			{
+				bingo::string_ex t;
+				bingo::string_append ap;
+				ap.add("package_size_:")->add(package_size_)->add(",ori_data_size:")->add(ori_data_size)->add(",data:")->add(t.stream_to_string(ori_data, ori_data_size));
+				message_out_with_time(ap.to_string())
+			}
+#endif
+
 			e_what.err_no(error_tcp_package_snd_exceed_max_size);
 			e_what.err_message(error_tcp_package_snd_exceed_max_size_message);
 			return -1;

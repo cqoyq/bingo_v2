@@ -80,25 +80,73 @@ CPPS =  bingo/string.cpp \
 		bingo/config/node.cpp \
 		bingo/config/xml/parse_handler.cpp \
 		bingo/config/json/parse_handler.cpp
-		
-ifeq ($(ShowDebug),y)
-DEBUGS = -DBINGO_TCP_SERVER_DEBUG \
-		 -DBINGO_TCP_CLIENT_DEBUG \
-		 -DBINGO_THREAD_TASK_DEBUG \
-		 -DBINGO_PROCESS_SHARED_MEMORY_DEBUG \
-		 -DBINGO_MYSQL_DEBUG
+
+
+# -DBINGO_TCP_SERVER_DEBUG
+ifeq ($(debug_tcp_server),y)
+BINGO_TCP_SERVER_DEBUG = -DBINGO_TCP_SERVER_DEBUG
 else
 DEBUGS =
 endif
 
+# -DBINGO_TCP_CLIENT_DEBUG
+ifeq ($(debug_tcp_client),y)
+BINGO_TCP_CLIENT_DEBUG = -DBINGO_TCP_CLIENT_DEBUG
+else
+BINGO_TCP_CLIENT_DEBUG =
+endif
+
+# -DBINGO_THREAD_TASK_DEBUG
+ifeq ($(debug_thread_task),y)
+BINGO_THREAD_TASK_DEBUG = -DBINGO_THREAD_TASK_DEBUG
+else
+BINGO_THREAD_TASK_DEBUG =
+endif
+
+# -DBINGO_PROCESS_SHARED_MEMORY_DEBUG
+ifeq ($(debug_process_shared_memory),y)
+BINGO_PROCESS_SHARED_MEMORY_DEBUG = -DBINGO_PROCESS_SHARED_MEMORY_DEBUG
+else
+BINGO_PROCESS_SHARED_MEMORY_DEBUG =
+endif
+
+# -DBINGO_MYSQL_DEBUG
+ifeq ($(debug_mysql),y)
+BINGO_MYSQL_DEBUG = -DBINGO_MYSQL_DEBUG
+else
+BINGO_MYSQL_DEBUG =
+endif
+
+# -DBINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR
+ifeq ($(debug_check_tcp_malloc_snd_buffer_error),y)
+BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR = -DBINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR
+else
+BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR =
+endif
+
 ifeq ($(findstring Test_Debug,$(ConfigName)),Test_Debug)
-	CXXFLAGS =	-O0 -g -Wall -fmessage-length=0 -std=c++11 $(DEBUGS) $(INCLUDE) 
+	CXXFLAGS =	-O2 -g -Wall -fmessage-length=0 -std=c++11 $(BINGO_TCP_SERVER_DEBUG) \
+																							  $(BINGO_TCP_CLIENT_DEBUG) \
+																							  $(BINGO_THREAD_TASK_DEBUG) \
+																							  $(BINGO_PROCESS_SHARED_MEMORY_DEBUG) \
+																							  $(BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR) \
+																							  $(INCLUDE)
 	TARGET = mytest
 else ifeq ($(findstring Lib_Debug,$(ConfigName)),Lib_Debug)
-	CXXFLAGS =	-O0 -g -fPIC  -shared -std=c++11 $(DEBUGS) $(INCLUDE)
+	CXXFLAGS =	-O2 -g -fPIC  -shared -std=c++11 $(BINGO_TCP_SERVER_DEBUG) \
+																			$(BINGO_TCP_CLIENT_DEBUG) \
+																			$(BINGO_THREAD_TASK_DEBUG) \
+																			$(BINGO_PROCESS_SHARED_MEMORY_DEBUG) \
+																			$(BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR) \
+																			$(INCLUDE)
 	TARGET = libbingo.so
 else ifeq ($(findstring Lib_Release,$(ConfigName)),Lib_Release)
-	CXXFLAGS =	-O2 -fPIC  -shared -std=c++11 $(DEBUGS)  $(INCLUDE)
+	CXXFLAGS =	-O2 -fPIC  -shared -std=c++11 $(BINGO_TCP_SERVER_DEBUG) \
+																		$(BINGO_TCP_CLIENT_DEBUG) \
+																		$(BINGO_THREAD_TASK_DEBUG) \
+																		$(BINGO_PROCESS_SHARED_MEMORY_DEBUG) \
+																		$(BINGO_CHECK_TCP_MALLOC_SND_BUFFER_ERROR) \
+																		$(INCLUDE)
 	TARGET = libbingo.so
 endif
 
